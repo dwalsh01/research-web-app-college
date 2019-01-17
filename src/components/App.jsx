@@ -1,10 +1,11 @@
 import React from 'react';
 import ToolbarHeader from './ToolbarHeader';
+import GridCards from './GridCards';
 
 const App = () => (
   <div>
     <ToolbarHeader>
-      <div>Hello World</div>
+      <GridCards />
     </ToolbarHeader>
   </div>
 );
