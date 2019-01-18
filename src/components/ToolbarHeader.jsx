@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import Button from '@material-ui/core/Button';
 
 const drawerWidth = 240;
 
@@ -40,6 +41,13 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: 12,
+    marginRight: 20
+  },
+  grow: {
+    flexGrow: 1
+  },
+  menuButtonHeader: {
+    marginLeft: -12,
     marginRight: 20
   },
   hide: {
@@ -112,9 +120,10 @@ class ToolbarHeader extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
-              Research Web Application
+            <Typography variant="h6" color="inherit" className={classes.grow}>
+              FSI Research Funding Application
             </Typography>
+            <Button color="inherit">Login</Button>
           </Toolbar>
         </AppBar>
         <Drawer

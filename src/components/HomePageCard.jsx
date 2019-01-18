@@ -7,10 +7,11 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Icon } from '@material-ui/core';
 
 const styles = {
   card: {
-    minWidth: 400,
+    minWidth: 250,
     height: '30vw'
   },
   bullet: {
@@ -27,30 +28,21 @@ const styles = {
 };
 
 function SimpleCard(props) {
-  const { classes } = props;
-  const bull = <span className={classes.bullet}>•</span>;
+  const { classes, title, titleIcon } = props;
 
   return (
     <Card className={classes.card}>
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Word of the Day
+        <Typography
+          variant="h5"
+          component="h2"
+          gutterBottom
+          style={{ display: 'inline-flex', verticalAlign: 'middle' }}
+        >
+          <Icon style={{ height: 30 }}>{titleIcon}</Icon>
+          <div style={{ height: 30 }}>{title}</div>
         </Typography>
-        <Typography variant="h5" component="h2">
-          be
-          {bull}
-          nev
-          {bull}o{bull}
-          lent
-        </Typography>
-        <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
-        <Typography component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography>
+        <Typography component="p">Hello world</Typography>
       </CardContent>
       <CardActions>
         <Button size="small">Learn More</Button>
