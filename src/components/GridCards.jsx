@@ -13,6 +13,7 @@ const Titles = [
   { title: 'Pending Requests', Icon: 'hourglass_empty' },
   { title: 'Rejected Requests', Icon: 'highlight_off' },
   { title: 'Submit Requests', Icon: 'assignment' }
+
 ];
 
 const styles = theme => ({
@@ -21,7 +22,6 @@ const styles = theme => ({
   },
   paper: {
     height: 140,
-    width: 100
   },
   control: {
     padding: theme.spacing.unit * 2

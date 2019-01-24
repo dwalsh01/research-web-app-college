@@ -42,7 +42,6 @@ function SimpleCard(props) {
           <Icon style={{ height: 30 }}>{titleIcon}</Icon>
           <div style={{ height: 30 }}>{title}</div>
         </Typography>
-        <Typography component="p">Hello world</Typography>
       </CardContent>
       <CardActions>
         <Button size="small">Learn More</Button>
