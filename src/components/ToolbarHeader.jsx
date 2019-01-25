@@ -14,7 +14,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Button from '@material-ui/core/Button';
+import FormDialog from './FormDialog';
 
 const drawerWidth = 240;
 
@@ -120,7 +120,7 @@ class ToolbarHeader extends React.Component {
             <Typography variant="h6" color="inherit" className={classes.grow}>
               FSI Research Funding Application
             </Typography>
-            <Button color="inherit">Login</Button>
+            <FormDialog />
           </Toolbar>
         </AppBar>
         <Drawer
@@ -138,10 +138,10 @@ class ToolbarHeader extends React.Component {
             </IconButton>
           </div>
           <Divider />
+          {/* TODO: INSERT SIDEBAR HERE */}
           <List>
-            {['User Settings', 'Available Grants', 'Dark Mode'].map((text) => (
+            {['User Settings', 'Available Grants', 'Dark Mode'].map(text => (
               <ListItem button key={text}>
-                {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
                 <ListItemText primary={text} />
               </ListItem>
             ))}
