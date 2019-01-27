@@ -31,6 +31,7 @@ class GuttersGrid extends React.Component {
 
   render() {
     const { classes, fetching, data, error } = this.props;
+    console.log('error');
     if (fetching) {
       return <h2>Loading data...</h2>;
     }
