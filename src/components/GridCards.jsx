@@ -1,11 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-// import FormLabel from '@material-ui/core/FormLabel';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import RadioGroup from '@material-ui/core/RadioGroup';
-// import Radio from '@material-ui/core/Radio';
-// import Paper from '@material-ui/core/Paper';
+import axios from 'axios';
 import SimpleCard from './HomePageCard';
 
 const Titles = [
@@ -13,7 +9,6 @@ const Titles = [
   { title: 'Pending Requests', Icon: 'hourglass_empty' },
   { title: 'Rejected Requests', Icon: 'highlight_off' },
   { title: 'Submit Requests', Icon: 'assignment' }
-
 ];
 
 const styles = theme => ({
@@ -21,7 +16,7 @@ const styles = theme => ({
     flexGrow: 1
   },
   paper: {
-    height: 140,
+    height: 140
   },
   control: {
     padding: theme.spacing.unit * 2
@@ -29,6 +24,15 @@ const styles = theme => ({
 });
 
 class GuttersGrid extends React.Component {
+  componentDidMount() {
+    axios
+      .get('/testing')
+      .then(response => {
+        console.log(`fetched data successfully!! ${JSON.stringify(response.data)}`);
+      })
+      .catch(error => console.log(error));
+  }
+
   handleChange = key => (event, value) => {
     this.setState({
       [key]: value
