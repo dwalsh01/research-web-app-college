@@ -5,13 +5,6 @@ import { connect } from 'react-redux';
 import { fetchSampleGrants } from '../actions';
 import SimpleCard from './HomePageCard';
 
-// const Titles = [
-//   { title: 'Successful Requests', Icon: 'assignment_turned_in' },
-//   { title: 'Pending Requests', Icon: 'hourglass_empty' },
-//   { title: 'Rejected Requests', Icon: 'highlight_off' },
-//   { title: 'Submit Requests', Icon: 'assignment' }
-// ];
-
 const styles = theme => ({
   root: {
     flexGrow: 1
