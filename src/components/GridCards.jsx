@@ -1,7 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { fetchSampleGrants } from '../actions';
 import SimpleCard from './HomePageCard';
 
 const Titles = [
@@ -25,22 +26,19 @@ const styles = theme => ({
 
 class GuttersGrid extends React.Component {
   componentDidMount() {
-    axios
-      .get('/testing')
-      .then(response => {
-        console.log(`fetched data successfully!! ${JSON.stringify(response.data)}`);
-      })
-      .catch(error => console.log(error));
+    this.props.fetchSampleGrants();
   }
 
-  handleChange = key => (event, value) => {
-    this.setState({
-      [key]: value
-    });
-  };
-
   render() {
-    const { classes } = this.props;
+    const { classes, fetching, data, error } = this.props;
+    if (fetching) {
+      return <h2>Loading data...</h2>;
+    }
+    // const renderRedux = data.map(grant => (
+    //   <Grid key={grant.grant_id} item xs={6}>
+    //     <SimpleCard title={grant.grant_title} />
+    //   </Grid>
+    // ))
     const renderList = Titles.map(header => (
       <Grid key={header.title} item xs={6}>
         <SimpleCard title={header.title} titleIcon={header.Icon} />
@@ -54,4 +52,13 @@ class GuttersGrid extends React.Component {
   }
 }
 
-export default withStyles(styles)(GuttersGrid);
+const mapStateToProps = state => ({
+  fetching: state.AllGrants.fetching,
+  data: state.AllGrants.data,
+  error: state.AllGrants.error
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchSampleGrants }
+)(withStyles(styles)(GuttersGrid));

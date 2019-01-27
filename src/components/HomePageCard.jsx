@@ -39,7 +39,7 @@ function SimpleCard(props) {
           gutterBottom
           style={{ display: 'inline-flex', verticalAlign: 'middle' }}
         >
-          <Icon style={{ height: 30 }}>{titleIcon}</Icon>
+          <Icon style={{ height: 30 }}>{titleIcon || ''}</Icon>
           <div style={{ height: 30 }}>{title}</div>
         </Typography>
       </CardContent>

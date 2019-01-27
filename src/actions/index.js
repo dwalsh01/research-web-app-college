@@ -6,20 +6,22 @@ export const fetchSampleGrants = () => dispatch => {
   return axios
     .get('/testing')
     .then(response => response.data)
-    .then(data => dispatch(recieveGrants(data)))
+    .then(data => {
+      dispatch(recieveGrants(data));
+    })
     .catch(error => dispatch(errorFetchingData(error)));
 };
 
 export const startFetchGrants = () => ({
-  action: FETCH_BEGIN
+  type: FETCH_BEGIN
 });
 
 export const recieveGrants = data => ({
-  action: FETCH_DATA_SUCCESS,
+  type: FETCH_DATA_SUCCESS,
   payload: data
 });
 
 export const errorFetchingData = error => ({
-  action: FETCH_DATA_FAILURE,
+  type: FETCH_DATA_FAILURE,
   payload: error.message
 });
