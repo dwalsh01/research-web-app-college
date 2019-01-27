@@ -35,14 +35,12 @@ class GuttersGrid extends React.Component {
     if (fetching) {
       return <h2>Loading data...</h2>;
     }
+    if (error) {
+      return <h1>Error! Please try again!</h1>;
+    }
     const renderRedux = data.map(grant => (
       <Grid key={grant.grant_id} item xs={6}>
         <SimpleCard title={grant.grant_title} />
-      </Grid>
-    ));
-    const renderList = Titles.map(header => (
-      <Grid key={header.title} item xs={6}>
-        <SimpleCard title={header.title} titleIcon={header.Icon} />
       </Grid>
     ));
     return (
