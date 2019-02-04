@@ -5,10 +5,10 @@ import Landing from './Landing';
 
 const App = () => (
   <div>
-    <Landing />
-    {/* <ToolbarHeader>
+    {/* <Landing /> */}
+    <ToolbarHeader>
       <Routes />
-    </ToolbarHeader> */}
+    </ToolbarHeader>
   </div>
 );
 
