@@ -8,6 +8,10 @@ import {
   LOGIN_ERROR
 } from './actionType';
 
+const headers = {
+  'Content-Type': 'application/json'
+};
+
 export const fetchSampleGrants = () => dispatch => {
   dispatch(startFetchGrants());
   return axios
@@ -19,16 +23,14 @@ export const fetchSampleGrants = () => dispatch => {
     .catch(error => dispatch(errorFetchingData(error)));
 };
 
-export const login = (username, password) => dispatch => {
+export const login = (email, password) => dispatch => {
   dispatch(startLogin());
   return axios
-    .post('/login', {
-      username,
-      password
-    })
-    .then(response => {
-      console.log(response);
-      dispatch(loginSuccess());
+    .post('/login_user', { email, password }, { headers })
+    .then(response => response.data)
+    .then(data => {
+      dispatch(loginSuccess(data));
+      return data;
     })
     .catch(error => dispatch(loginError(error.message)));
 };

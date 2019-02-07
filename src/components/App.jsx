@@ -1,14 +1,15 @@
 import React from 'react';
 import ToolbarHeader from './ToolbarHeader';
-import Routes from '../router/routes';
+// import Routes from '../router/routes';
 import Landing from './Landing';
+import TestingLogin from './TestingLogin';
 
 const App = () => (
   <div>
-    {/* <Landing /> */}
-    <ToolbarHeader>
-      <Routes />
-    </ToolbarHeader>
+    <Landing />
+    {/* <ToolbarHeader>
+      <TestingLogin />
+    </ToolbarHeader> */}
   </div>
 );
 
