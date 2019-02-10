@@ -21,7 +21,7 @@ const formValid = ({ formErrors, ...rest }) => {
   return valid;
 };
 
-class App extends Component {
+class Registration extends Component {
   constructor(props) {
     super(props);
 
@@ -160,4 +160,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Registration;
