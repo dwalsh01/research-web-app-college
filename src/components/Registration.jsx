@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import "../styles/Registration.css";
 
 const emailRegex = RegExp(
@@ -151,7 +152,7 @@ class Registration extends Component {
             </div>
             <div className="createAccount">
               <button type="submit">Create Account</button>
-              <small><a href="url">Already Have an Account?</a></small>
+              <small><Link to='/login'>Already have an account?</Link></small>
             </div>
           </form>
         </div>

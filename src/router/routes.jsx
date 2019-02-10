@@ -9,9 +9,9 @@ import LoginForm from '../components/login';
 const Routes = () => (
   <Switch>
     <Route exact path="/" component={Landing} />
-    <Route path="/registration" component={Registration} />
+    <Route path="/register" component={Registration} />
     <Route path="/login" component={LoginForm}/>
-    <Route path="/cards" component={GridCards}/>
+    <Route path="/calls" component={GridCards}/>
     <Route component={NoMatch} />
   </Switch>
 );
