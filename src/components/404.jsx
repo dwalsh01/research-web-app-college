@@ -35,7 +35,7 @@ export default () => (
       <h1>404</h1>
       <TakeBack>
         Take me back to
-        <Link to="/">fsigrantireland.ie</Link>
+        <Link to="/">sfigrantireland.ie</Link>
       </TakeBack>
     </ErrorContainer>
   </div>
