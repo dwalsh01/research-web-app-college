@@ -15,7 +15,7 @@ const headers = {
 export const fetchSampleGrants = () => dispatch => {
   dispatch(startFetchGrants());
   return axios
-    .get('/testing')
+    .get('playground/testing')
     .then(response => response.data)
     .then(data => {
       dispatch(recieveGrants(data));
