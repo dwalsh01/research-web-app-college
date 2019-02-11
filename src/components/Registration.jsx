@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { registerUser } from '../actions';
 import "../styles/Registration.css";
 
 const emailRegex = RegExp(
@@ -29,6 +31,12 @@ class Registration extends Component {
     this.state = {
       firstName: null,
       lastName: null,
+      jobTitle: null,
+      prefix: null,
+      suffix: null,
+      phone: null,
+      phoneExt: null,
+      orcid: null,
       email: null,
       password: null,
       formErrors: {
@@ -51,6 +59,19 @@ class Registration extends Component {
         Email: ${this.state.email}
         Password: ${this.state.password}
       `);
+
+      this.props.registerUser(this.state.firstName,
+                                this.state.lastName,
+                                this.state.jobTitle,
+                                this.state.prefix,
+                                this.state.suffix,
+                                this.state.phone,
+                                this.state.phoneExt,
+                                this.state.email,
+                                this.state.password,
+                                this.state.orcid
+      );
+
     } else {
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
     }
@@ -63,12 +84,12 @@ class Registration extends Component {
 
     switch (name) {
       case "firstName":
-        formErrors.firstName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
+        formErrors.firstName = "";
+            //value.length < 3 ? "minimum 3 characaters required" : "";
         break;
       case "lastName":
-        formErrors.lastName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
+        formErrors.lastName = "";
+            //value.length < 3 ? "minimum 3 characaters required" : "";
         break;
       case "email":
         formErrors.email = emailRegex.test(value)
@@ -88,6 +109,11 @@ class Registration extends Component {
 
   render() {
     const { formErrors } = this.state;
+
+    const { regSuccess, regError } = this.props;
+    if (regSuccess){
+      this.props.history.push('/login');
+    }
 
     return (
       <div className="wrapper">
@@ -121,6 +147,72 @@ class Registration extends Component {
               {formErrors.lastName.length > 0 && (
                 <span className="errorMessage">{formErrors.lastName}</span>
               )}
+            </div>
+            <div className="lastName">
+              <label htmlFor="jobTitle">Job Title</label>
+              <input
+                className={formErrors.lastName.length > 0 ? "error" : null}
+                placeholder="Researcher"
+                type="text"
+                name="jobTitle"
+                noValidate
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="lastName">
+              <label htmlFor="prefix">Prefix</label>
+              <input
+                className={formErrors.lastName.length > 0 ? "error" : null}
+                placeholder="Mrs"
+                type="text"
+                name="prefix"
+                noValidate
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="lastName">
+              <label htmlFor="suffix">Suffix</label>
+              <input
+                className={formErrors.lastName.length > 0 ? "error" : null}
+                placeholder="Suffix"
+                type="text"
+                name="suffix"
+                noValidate
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="lastName">
+              <label htmlFor="phoneExt">Phone Extension</label>
+              <input
+                className={formErrors.lastName.length > 0 ? "error" : null}
+                placeholder="353"
+                type="text"
+                name="phoneExt"
+                noValidate
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="lastName">
+              <label htmlFor="phone">Phone Number</label>
+              <input
+                className={formErrors.lastName.length > 0 ? "error" : null}
+                placeholder="0834813000"
+                type="text"
+                name="phone"
+                noValidate
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="lastName">
+              <label htmlFor="orcid">ORCID</label>
+              <input
+                className={formErrors.lastName.length > 0 ? "error" : null}
+                placeholder="0000-0002-1891-0200"
+                type="text"
+                name="orcid"
+                noValidate
+                onChange={this.handleChange}
+              />
             </div>
             <div className="email">
               <label htmlFor="email">Email</label>
@@ -161,4 +253,12 @@ class Registration extends Component {
   }
 }
 
-export default Registration;
+const mapStateToProps = state => ({
+  regSuccess: state.regReducer.success,
+  regError: state.regReducer.error
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(Registration);

@@ -4,3 +4,6 @@ export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 export const LOGIN_BEGIN = 'LOGIN_BEGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const POST_BEGIN = 'POST_BEGIN';
+export const POST_RESPONSE = 'POST_RESPONSE';
+export const POST_ERROR = 'POST_ERROR';

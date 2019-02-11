@@ -5,7 +5,10 @@ import {
   FETCH_DATA_FAILURE,
   LOGIN_BEGIN,
   LOGIN_SUCCESS,
-  LOGIN_ERROR
+  LOGIN_ERROR,
+  POST_BEGIN,
+  POST_RESPONSE,
+  POST_ERROR
 } from './actionType';
 
 const headers = {
@@ -35,6 +38,21 @@ export const login = (email, password) => dispatch => {
     .catch(error => dispatch(loginError(error.message)));
 };
 
+export const registerUser = (first_name, second_name, job_title,
+                            prefix, suffix, phone, phone_extension,
+                            email, password, orcid) => dispatch => {
+    dispatch(startRegisterRequest());
+    return axios
+      .post('/register', { first_name, second_name, job_title,
+                            prefix, suffix, phone, phone_extension,
+                            email, password, orcid }, { headers })
+      .then(data => {
+        dispatch(receiveRegisterResponse(data));
+        return data;
+      })
+      .catch(error => dispatch(registrationError(error)));
+};
+
 export const startLogin = () => ({
   type: LOGIN_BEGIN
 });
@@ -46,16 +64,29 @@ export const loginError = msg => ({
   type: LOGIN_ERROR,
   payload: msg
 });
+
+
 export const startFetchGrants = () => ({
   type: FETCH_BEGIN
 });
-
 export const recieveGrants = data => ({
   type: FETCH_DATA_SUCCESS,
   payload: data
 });
-
 export const errorFetchingData = error => ({
   type: FETCH_DATA_FAILURE,
+  payload: error.message
+});
+
+
+export const startRegisterRequest = () => ({
+  type: POST_BEGIN
+});
+export const receiveRegisterResponse = data => ({
+  type: POST_RESPONSE,
+  payload: data
+});
+export const registrationError = error => ({
+  type: POST_ERROR,
   payload: error.message
 });

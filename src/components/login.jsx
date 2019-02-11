@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login } from '../actions'; 
 import "../styles/Registration.css";
 
 const emailRegex = RegExp(
@@ -27,17 +29,17 @@ class LoginForm extends Component {
     super(props);
 
     this.state = {
-      firstName: null,
-      lastName: null,
       email: null,
       password: null,
       formErrors: {
-        firstName: "",
-        lastName: "",
         email: "",
         password: ""
       }
     };
+  }
+
+  componentDidMount(){
+
   }
 
   handleSubmit = e => {
@@ -46,11 +48,12 @@ class LoginForm extends Component {
     if (formValid(this.state)) {
       console.log(`
         --SUBMITTING--
-        First Name: ${this.state.firstName}
-        Last Name: ${this.state.lastName}
         Email: ${this.state.email}
         Password: ${this.state.password}
       `);
+        
+      this.props.login(this.state.email, this.state.password);
+    
     } else {
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
     }
@@ -62,14 +65,6 @@ class LoginForm extends Component {
     let formErrors = { ...this.state.formErrors };
 
     switch (name) {
-      case "firstName":
-        formErrors.firstName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
-        break;
-      case "lastName":
-        formErrors.lastName =
-          value.length < 3 ? "minimum 3 characaters required" : "";
-        break;
       case "email":
         formErrors.email = emailRegex.test(value)
           ? ""
@@ -86,8 +81,19 @@ class LoginForm extends Component {
     this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   };
 
+  redirectHome = () => {
+    this.props.history.push('/');
+  }
+
   render() {
     const { formErrors } = this.state;
+
+    const { user, isLoggedIn } = this.props;
+    if (isLoggedIn){
+      console.log(`Logged in as: ${user.email}`);
+      // This is bad, I know  
+      this.redirectHome();
+    }
 
     return (
       <div className="wrapper">
@@ -133,4 +139,14 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+const mapStateToProps = state => ({
+  isLoggedIn: state.authReducer.isLoggedIn,
+  user: state.authReducer.user,
+  error: state.authReducer.error,
+  errorMsg: state.authReducer.errorMsg
+});
+
+export default connect(
+  mapStateToProps,
+  { login }
+)(LoginForm);
