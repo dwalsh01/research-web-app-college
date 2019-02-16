@@ -12,17 +12,6 @@ const headers = {
   'Content-Type': 'application/json'
 };
 
-export const fetchSampleGrants = () => dispatch => {
-  dispatch(startFetchGrants());
-  return axios
-    .get('/testing')
-    .then(response => response.data)
-    .then(data => {
-      dispatch(recieveGrants(data));
-    })
-    .catch(error => dispatch(errorFetchingData(error)));
-};
-
 export const login = (email, password) => dispatch => {
   dispatch(startLogin());
   return axios
@@ -45,17 +34,4 @@ export const loginSuccess = data => ({
 export const loginError = msg => ({
   type: LOGIN_ERROR,
   payload: msg
-});
-export const startFetchGrants = () => ({
-  type: FETCH_BEGIN
-});
-
-export const recieveGrants = data => ({
-  type: FETCH_DATA_SUCCESS,
-  payload: data
-});
-
-export const errorFetchingData = error => ({
-  type: FETCH_DATA_FAILURE,
-  payload: error.message
 });

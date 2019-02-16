@@ -1,8 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import { connect } from 'react-redux';
-import { fetchSampleGrants } from '../actions';
 import SimpleCard from './HomePageCard';
 
 const styles = theme => ({
@@ -17,39 +15,25 @@ const styles = theme => ({
   }
 });
 
-class GuttersGrid extends React.Component {
-  componentDidMount() {
-    this.props.fetchSampleGrants();
-  }
+const GuttersGrid = props => {
+  const { classes } = props;
 
-  render() {
-    const { classes, fetching, data, error } = this.props;
-    if (fetching) {
-      return <h2>Loading data...</h2>;
-    }
-    if (error) {
-      return <h1>Error! Please try again!</h1>;
-    }
-    const renderRedux = data.map(grant => (
-      <Grid key={grant.grant_id} item xs={6}>
-        <SimpleCard title={grant.grant_title} />
+  return (
+    <Grid container className={classes.root} spacing={16}>
+      <Grid key={1} item xs={6}>
+        <SimpleCard title="Hello World" />
       </Grid>
-    ));
-    return (
-      <Grid container className={classes.root} spacing={16}>
-        {renderRedux}
+      <Grid key={2} item xs={6}>
+        <SimpleCard title="Hello World" />
       </Grid>
-    );
-  }
-}
+      <Grid key={3} item xs={6}>
+        <SimpleCard title="Hello World" />
+      </Grid>
+      <Grid key={4} item xs={6}>
+        <SimpleCard title="Hello World" />
+      </Grid>
+    </Grid>
+  );
+};
 
-const mapStateToProps = state => ({
-  fetching: state.AllGrants.fetching,
-  data: state.AllGrants.data,
-  error: state.AllGrants.error
-});
-
-export default connect(
-  mapStateToProps,
-  { fetchSampleGrants }
-)(withStyles(styles)(GuttersGrid));
+export default withStyles(styles)(GuttersGrid);

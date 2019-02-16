@@ -6,8 +6,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { connect } from 'react-redux';
+import { login } from '../../actions';
 
-export default class FormDialog extends React.Component {
+class FormDialog extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,9 +28,17 @@ export default class FormDialog extends React.Component {
     this.setState({ open: false });
   };
 
+  // mw11@test.com', 'password
   handleSubmit = event => {
+    const { email, pwd } = this.state;
+    const { isLoggedIn } = this.props;
     event.preventDefault();
-    console.log(this.state);
+    this.props.login(email, pwd);
+    if (isLoggedIn) {
+      this.setState({
+        open: false
+      });
+    }
   };
 
   handleTextFieldChange = (e, item) => {
@@ -43,6 +53,10 @@ export default class FormDialog extends React.Component {
 
   render() {
     const { open } = this.state;
+    const { isLoggedIn, user, error, errorMsg } = this.props;
+    if (isLoggedIn) {
+      return <h1>{user.email}</h1>;
+    }
     return (
       <div>
         <Button color="inherit" onClick={this.handleClickOpen}>
@@ -88,3 +102,15 @@ export default class FormDialog extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  isLoggedIn: state.authReducer.isLoggedIn,
+  user: state.authReducer.user,
+  error: state.authReducer.error,
+  errorMsg: state.authReducer.errorMsg
+});
+
+export default connect(
+  mapStateToProps,
+  { login }
+)(FormDialog);
