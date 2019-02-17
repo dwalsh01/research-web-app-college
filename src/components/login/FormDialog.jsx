@@ -28,17 +28,11 @@ class FormDialog extends React.Component {
     this.setState({ open: false });
   };
 
-  // mw11@test.com', 'password
   handleSubmit = event => {
     const { email, pwd } = this.state;
-    const { isLoggedIn } = this.props;
     event.preventDefault();
     this.props.login(email, pwd);
-    if (isLoggedIn) {
-      this.setState({
-        open: false
-      });
-    }
+    window.location.reload();
   };
 
   handleTextFieldChange = (e, item) => {
@@ -106,8 +100,7 @@ class FormDialog extends React.Component {
 const mapStateToProps = state => ({
   isLoggedIn: state.authReducer.isLoggedIn,
   user: state.authReducer.user,
-  error: state.authReducer.error,
-  errorMsg: state.authReducer.errorMsg
+  currentUserReducer: state.currentUserReducer
 });
 
 export default connect(

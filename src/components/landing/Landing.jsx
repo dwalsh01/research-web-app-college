@@ -3,8 +3,8 @@ import Particles from 'react-particles-js';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import params from '../util/params';
-import logo from '../assets/logo_01.png';
+import params from '../../util/params';
+import logo from '../../assets/logo_01.png';
 
 const StyledParticles = styled.div`
   .centered {
@@ -28,6 +28,8 @@ const StyledParticles = styled.div`
 `;
 const Login = props => <Link to="/login" {...props} />;
 const Register = props => <Link to="/register" {...props} />;
+// FIXME: update this to use the formdialog button
+// TODO: add a form modal button for register puroposes
 export default () => (
   <StyledParticles>
     <Particles

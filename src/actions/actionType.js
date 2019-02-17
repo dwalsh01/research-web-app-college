@@ -4,3 +4,6 @@ export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 export const LOGIN_BEGIN = 'LOGIN_BEGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const USER_PRESENT = 'USER_PRESENT';
+export const NO_USER = 'NO_USER';
+export const USER_DATA = 'USER_DATA';

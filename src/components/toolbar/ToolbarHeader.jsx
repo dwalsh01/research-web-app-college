@@ -14,11 +14,16 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import FormDialog from './login/FormDialog';
+import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux';
+import { Icon } from '@material-ui/core';
 
 const drawerWidth = 240;
 
 const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit
+  },
   root: {
     display: 'flex'
   },
@@ -96,9 +101,8 @@ class ToolbarHeader extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, children, currentUserReducer } = this.props;
     const { open } = this.state;
-    const { children } = this.props;
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -120,7 +124,13 @@ class ToolbarHeader extends React.Component {
             <Typography variant="h6" color="inherit" className={classes.grow}>
               FSI Research Funding Application
             </Typography>
-            <FormDialog />
+
+            <Icon>account_circle</Icon>
+
+            <h3>{currentUserReducer.email}</h3>
+            <Button variant="contained" className={classes.button} href="/api/logout">
+              Logout
+            </Button>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -161,4 +171,8 @@ class ToolbarHeader extends React.Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(ToolbarHeader);
+const mapStateToProps = ({ currentUserReducer }) => ({
+  currentUserReducer
+});
+
+export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(ToolbarHeader));

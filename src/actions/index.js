@@ -1,16 +1,30 @@
 import axios from 'axios';
-import {
-  FETCH_BEGIN,
-  FETCH_DATA_SUCCESS,
-  FETCH_DATA_FAILURE,
-  LOGIN_BEGIN,
-  LOGIN_SUCCESS,
-  LOGIN_ERROR
-} from './actionType';
+import { USER_DATA, NO_USER, LOGIN_BEGIN, LOGIN_SUCCESS, LOGIN_ERROR } from './actionType';
 
 const headers = {
   'Content-Type': 'application/json'
 };
+
+export const currentUser = () => dispatch =>
+  axios
+    .get('/api/user')
+    .then(response => response.data)
+    .then(data => {
+      if (data.user === false) {
+        dispatch(noUser());
+      } else {
+        dispatch(userLoginData(data.user));
+      }
+    });
+
+export const userLoginData = user => ({
+  type: USER_DATA,
+  payload: user
+});
+
+export const noUser = () => ({
+  type: NO_USER
+});
 
 export const login = (email, password) => dispatch => {
   dispatch(startLogin());

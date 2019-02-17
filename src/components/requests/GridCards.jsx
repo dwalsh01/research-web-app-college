@@ -1,0 +1,58 @@
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import RequestCard, { ICONS } from './RequestCard';
+import RequestsTable from './RequestsTable';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    height: 140
+  },
+  control: {
+    padding: theme.spacing.unit * 2
+  }
+});
+
+const GridCards = props => {
+  const { classes } = props;
+
+  return (
+    <Grid container className={classes.root} spacing={16}>
+      <Grid key={1} item xs={6}>
+        <RequestCard
+          title="Accepted Requests"
+          titleIcon={ICONS.ACCEPTED}
+          text="View of accepted requests"
+        >
+          <RequestsTable />
+        </RequestCard>
+      </Grid>
+      <Grid key={2} item xs={6}>
+        <RequestCard
+          title="Pending Requests"
+          titleIcon={ICONS.PENDING}
+          text="View of pending requests"
+        >
+          <RequestsTable />
+        </RequestCard>
+      </Grid>
+      <Grid key={3} item xs={6}>
+        <RequestCard
+          title="Rejected Requests"
+          titleIcon={ICONS.REJECTED}
+          text="View of rejected requests"
+        >
+          <RequestsTable />
+        </RequestCard>
+      </Grid>
+      <Grid key={4} item xs={6}>
+        <RequestCard title="Submit Requests" titleIcon={ICONS.SUBMIT} text="Submit Request" />
+      </Grid>
+    </Grid>
+  );
+};
+
+export default withStyles(styles)(GridCards);
