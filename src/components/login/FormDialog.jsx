@@ -32,7 +32,6 @@ class FormDialog extends React.Component {
     const { email, pwd } = this.state;
     event.preventDefault();
     this.props.login(email, pwd);
-    window.location.reload();
   };
 
   handleTextFieldChange = (e, item) => {
@@ -47,7 +46,7 @@ class FormDialog extends React.Component {
 
   render() {
     const { open } = this.state;
-    const { isLoggedIn, user, error, errorMsg } = this.props;
+    const { isLoggedIn, user } = this.props;
     if (isLoggedIn) {
       return <h1>{user.email}</h1>;
     }

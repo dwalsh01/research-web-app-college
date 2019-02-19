@@ -5,6 +5,7 @@ import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import params from '../../util/params';
 import logo from '../../assets/logo_01.png';
+import FormDialog from '../login/FormDialog';
 
 const StyledParticles = styled.div`
   .centered {
@@ -41,9 +42,7 @@ export default () => (
     />
     <div className="centered">
       <img src={logo} alt="SFI Ireland logo, for what's next" />
-      <Button variant="contained" size="large" component={Login}>
-        Login
-      </Button>
+      <FormDialog />
 
       <Button variant="contained" size="large" color="secondary" component={Register}>
         Register

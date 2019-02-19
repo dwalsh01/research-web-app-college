@@ -122,12 +122,12 @@ class ToolbarHeader extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              FSI Research Funding Application
+              SFI Research Funding Application
             </Typography>
 
             <Icon>account_circle</Icon>
 
-            <h3>{currentUserReducer.email}</h3>
+            <h3>{currentUserReducer.user.email}</h3>
             <Button variant="contained" className={classes.button} href="/api/logout">
               Logout
             </Button>

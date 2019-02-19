@@ -10,11 +10,10 @@ export const currentUser = () => dispatch =>
     .get('/api/user')
     .then(response => response.data)
     .then(data => {
-      if (data.user === false) {
-        dispatch(noUser());
-      } else {
-        dispatch(userLoginData(data.user));
+      if (data.user === 0) {
+        return dispatch(noUser());
       }
+      return dispatch(userLoginData(data.user));
     });
 
 export const userLoginData = user => ({
@@ -32,6 +31,7 @@ export const login = (email, password) => dispatch => {
     .post('/login_user', { email, password }, { headers })
     .then(response => response.data)
     .then(data => {
+      console.log('login reponse: ', data);
       dispatch(loginSuccess(data));
       return data;
     })

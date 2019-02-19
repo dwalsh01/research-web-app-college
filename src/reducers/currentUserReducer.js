@@ -1,11 +1,18 @@
-import { USER_DATA } from '../actions/actionType';
+import { USER_DATA, NO_USER } from '../actions/actionType';
 
-export default function currentUserReducer(state = null, action) {
+const initialState = {
+  isLoggedIn: false,
+  user: null
+};
+export default function currentUserReducer(state = initialState, action) {
   switch (action.type) {
     case USER_DATA:
-      return action.payload;
-    case 'NO_USER':
-      return false;
+      return {
+        isLoggedIn: true,
+        user: action.payload
+      };
+    case NO_USER:
+      return { isLoggedIn: false, user: null };
     default:
       return state;
   }

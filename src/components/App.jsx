@@ -22,13 +22,12 @@ class App extends React.Component {
   }
 
   renderContent() {
-    switch (this.props.currentUserReducer) {
-      case null:
-        return (
-          <Loading>
-            <Loader type="Grid" color="#00aced" height="125" width="125" />
-          </Loading>
-        );
+    switch (this.props.currentUserReducer.isLoggedIn) {
+      // return (
+      //   <Loading>
+      //     <Loader type="Grid" color="#00aced" height="125" width="125" />
+      //   </Loading>
+      // );
       case false:
         return <Landing />;
       default:
