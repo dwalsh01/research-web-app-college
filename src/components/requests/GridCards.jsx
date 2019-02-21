@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import RequestCard, { ICONS } from './RequestCard';
 import RequestsTable from './RequestsTable';
+import pageTitle from '../../util/pageTitle';
 
 const styles = theme => ({
   root: {
@@ -17,6 +18,7 @@ const styles = theme => ({
 });
 
 const GridCards = props => {
+  pageTitle('Home');
   const { classes } = props;
 
   return (

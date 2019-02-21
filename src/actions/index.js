@@ -1,10 +1,18 @@
 import axios from 'axios';
-import { USER_DATA, NO_USER, LOGIN_BEGIN, LOGIN_SUCCESS, LOGIN_ERROR } from './actionType';
+import {
+  USER_DATA,
+  NO_USER,
+  LOGIN_BEGIN,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+  LOGOUT_BEGIN
+} from './actionType';
 
 const headers = {
   'Content-Type': 'application/json'
 };
 
+// TODO: implement logout and also fix the login function
 export const currentUser = () => dispatch =>
   axios
     .get('/api/user')
@@ -32,7 +40,8 @@ export const login = (email, password) => dispatch => {
     .then(response => response.data)
     .then(data => {
       console.log('login reponse: ', data);
-      dispatch(loginSuccess(data));
+      // dispatch(loginSuccess(data));
+      dispatch(userLoginData(data));
       return data;
     })
     .catch(error => dispatch(loginError(error.message)));
@@ -48,4 +57,21 @@ export const loginSuccess = data => ({
 export const loginError = msg => ({
   type: LOGIN_ERROR,
   payload: msg
+});
+
+export const logout = () => dispatch => {
+  dispatch(logoutBegin());
+  axios
+    .get('/api/logout')
+    .then(response => response.data)
+    .then(data => {
+      if (data.logout === 'success') {
+        dispatch(noUser);
+      }
+    })
+    .catch(error => console.log(error.message));
+};
+
+export const logoutBegin = () => ({
+  type: LOGOUT_BEGIN
 });

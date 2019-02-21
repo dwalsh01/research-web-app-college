@@ -1,9 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { Link } from 'react-router-dom';
+import Divider from '@material-ui/core/Divider';
+import ListItemLink from '../../util/ListItemLink';
 
 const styles = theme => ({
   root: {
@@ -13,18 +12,14 @@ const styles = theme => ({
   }
 });
 
-function ListItemLink(props) {
-  return <ListItem button component={Link} to={`/profile/${props.id}`} {...props} />;
-}
 const ProfileList = ({ classes }) => (
-  <List className={classes.root}>
-    <ListItemLink id="test1">
-      <ListItemText primary="Personal" />
-    </ListItemLink>
-    <ListItemLink id="test2">
-      <ListItemText primary="Professional" />
-    </ListItemLink>
-  </List>
+  <div>
+    <Divider />
+    <List className={classes.root}>
+      <ListItemLink route="profile/personal" text="Personal" />
+      <ListItemLink route="profile/professional" text="Professional" />
+    </List>
+  </div>
 );
 
 export default withStyles(styles)(ProfileList);

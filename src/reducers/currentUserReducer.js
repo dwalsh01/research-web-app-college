@@ -1,11 +1,16 @@
-import { USER_DATA, NO_USER } from '../actions/actionType';
+import { USER_DATA, NO_USER, LOGOUT_BEGIN } from '../actions/actionType';
 
 const initialState = {
-  isLoggedIn: false,
+  isLoggedIn: null,
   user: null
 };
 export default function currentUserReducer(state = initialState, action) {
   switch (action.type) {
+    case LOGOUT_BEGIN:
+      return {
+        isLoggedIn: false,
+        user: null
+      };
     case USER_DATA:
       return {
         isLoggedIn: true,

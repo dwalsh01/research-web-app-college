@@ -5,18 +5,16 @@ import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { Icon } from '@material-ui/core';
+import SidebarRoutes from '../sidebar/SidebarRoutes';
+import { logout } from '../../actions';
 
 const drawerWidth = 240;
 
@@ -100,6 +98,11 @@ class ToolbarHeader extends React.Component {
     this.setState({ open: false });
   };
 
+  handleLogout = () => {
+    this.props.logout();
+    // window.location.reload();
+  };
+
   render() {
     const { classes, theme, children, currentUserReducer } = this.props;
     const { open } = this.state;
@@ -127,8 +130,8 @@ class ToolbarHeader extends React.Component {
 
             <Icon>account_circle</Icon>
 
-            <h3>{currentUserReducer.user.email}</h3>
-            <Button variant="contained" className={classes.button} href="/api/logout">
+            <h3>{currentUserReducer.user ? currentUserReducer.user.email : ''}</h3>
+            <Button variant="contained" className={classes.button} onClick={this.handleLogout}>
               Logout
             </Button>
           </Toolbar>
@@ -147,16 +150,8 @@ class ToolbarHeader extends React.Component {
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
           </div>
-          <Divider />
           {/* TODO: INSERT SIDEBAR HERE */}
-          <List>
-            {['User Settings', 'Available Grants', 'Dark Mode'].map(text => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
+          <SidebarRoutes />
         </Drawer>
         <main
           className={classNames(classes.content, {
@@ -175,4 +170,7 @@ const mapStateToProps = ({ currentUserReducer }) => ({
   currentUserReducer
 });
 
-export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(ToolbarHeader));
+export default connect(
+  mapStateToProps,
+  { logout }
+)(withStyles(styles, { withTheme: true })(ToolbarHeader));

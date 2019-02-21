@@ -7,3 +7,4 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const USER_PRESENT = 'USER_PRESENT';
 export const NO_USER = 'NO_USER';
 export const USER_DATA = 'USER_DATA';
+export const LOGOUT_BEGIN = 'LOGOUT_BEGIN';

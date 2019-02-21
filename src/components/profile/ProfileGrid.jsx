@@ -3,6 +3,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Route } from 'react-router-dom';
+import PersonalForm from './forms/personal/PersonalFormPage';
+import pageTitle from '../../util/pageTitle';
 
 const styles = theme => ({
   root: {
@@ -15,10 +17,10 @@ const styles = theme => ({
   }
 });
 
-const Test1 = () => <h1>Test1</h1>;
 const Test2 = () => <h1>Test2</h1>;
 
-function AutoGrid({ classes, profileCard, other }) {
+function ProfileGrid({ classes, profileCard }) {
+  pageTitle('Profile');
   return (
     <div className={classes.root}>
       <Grid container spacing={24}>
@@ -27,8 +29,8 @@ function AutoGrid({ classes, profileCard, other }) {
         </Grid>
         <Grid item xs={8}>
           <Paper className={classes.paper}>
-            <Route path="/profile/test1" component={Test1} />
-            <Route path="/profile/test2" component={Test2} />
+            <Route path="/profile/personal" component={PersonalForm} />
+            <Route path="/profile/professional" component={Test2} />
           </Paper>
         </Grid>
       </Grid>
@@ -36,4 +38,4 @@ function AutoGrid({ classes, profileCard, other }) {
   );
 }
 
-export default withStyles(styles)(AutoGrid);
+export default withStyles(styles)(ProfileGrid);

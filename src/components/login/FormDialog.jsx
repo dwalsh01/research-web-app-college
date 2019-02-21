@@ -46,10 +46,6 @@ class FormDialog extends React.Component {
 
   render() {
     const { open } = this.state;
-    const { isLoggedIn, user } = this.props;
-    if (isLoggedIn) {
-      return <h1>{user.email}</h1>;
-    }
     return (
       <div>
         <Button color="inherit" onClick={this.handleClickOpen}>
@@ -96,10 +92,8 @@ class FormDialog extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isLoggedIn: state.authReducer.isLoggedIn,
-  user: state.authReducer.user,
-  currentUserReducer: state.currentUserReducer
+const mapStateToProps = ({ currentUserReducer }) => ({
+  currentUserReducer
 });
 
 export default connect(

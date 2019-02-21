@@ -8,11 +8,11 @@ import Main from './Main';
 import { currentUser } from '../actions/index';
 
 const Loading = styled.div`
-  position: 'fixed';
-  top: '50%';
-  left: '50%';
-  transform: 'translate(-50%, -50%)';
-  text-align: 'center';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 `;
 
 class App extends React.Component {
@@ -23,11 +23,12 @@ class App extends React.Component {
 
   renderContent() {
     switch (this.props.currentUserReducer.isLoggedIn) {
-      // return (
-      //   <Loading>
-      //     <Loader type="Grid" color="#00aced" height="125" width="125" />
-      //   </Loading>
-      // );
+      case null:
+        return (
+          <Loading>
+            <Loader type="Grid" color="#00aced" height="125" width="125" />
+          </Loading>
+        );
       case false:
         return <Landing />;
       default:
@@ -36,6 +37,7 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.props.currentUserReducer);
     return <div>{this.renderContent()}</div>;
   }
 }

@@ -27,7 +27,6 @@ const StyledParticles = styled.div`
     margin: 10px;
   }
 `;
-const Login = props => <Link to="/login" {...props} />;
 const Register = props => <Link to="/register" {...props} />;
 // FIXME: update this to use the formdialog button
 // TODO: add a form modal button for register puroposes
