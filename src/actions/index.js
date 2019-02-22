@@ -39,12 +39,12 @@ export const login = (email, password) => dispatch => {
     .post('/login_user', { email, password }, { headers })
     .then(response => response.data)
     .then(data => {
-      console.log('login reponse: ', data);
-      // dispatch(loginSuccess(data));
       dispatch(userLoginData(data));
       return data;
     })
-    .catch(error => dispatch(loginError(error.message)));
+    .catch(error => {
+      dispatch(loginError(error.response.data.message));
+    });
 };
 
 export const startLogin = () => ({
