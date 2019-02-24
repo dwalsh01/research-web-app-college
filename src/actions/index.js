@@ -5,14 +5,14 @@ import {
   LOGIN_BEGIN,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
-  LOGOUT_BEGIN
+  LOGOUT_BEGIN,
+  TEAMS_SUCCESS
 } from './actionType';
 
 const headers = {
   'Content-Type': 'application/json'
 };
 
-// TODO: implement logout and also fix the login function
 export const currentUser = () => dispatch =>
   axios
     .get('/api/user')
@@ -74,4 +74,19 @@ export const logout = () => dispatch => {
 
 export const logoutBegin = () => ({
   type: LOGOUT_BEGIN
+});
+
+export const fetchTeams = () => dispatch =>
+  axios
+    .get('/api/get_teams')
+    .then(response => response.data)
+    .then(data => {
+      console.log('data fetched teams: ', data);
+      dispatch(fetchTeamsSuccess(data.teams));
+    })
+    .catch(err => console.log(err));
+
+export const fetchTeamsSuccess = teams => ({
+  type: TEAMS_SUCCESS,
+  payload: teams
 });

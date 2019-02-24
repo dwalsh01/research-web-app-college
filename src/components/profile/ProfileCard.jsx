@@ -40,7 +40,7 @@ const ProfileCard = ({ user, classes, profileList }) => (
       }}
       avatar={
         <Avatar aria-label="Name" className={classes.avatar}>
-          {user.f_name[0].toUpperCase()}
+          {`${user.f_name[0].toUpperCase()}${user.l_name[0].toUpperCase()}`}
         </Avatar>
       }
       title={toTitleCase(`${user.f_name} ${user.l_name}`)}
