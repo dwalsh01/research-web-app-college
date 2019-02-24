@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import pageTitle from '../../util/pageTitle';
 import TeamsCard from './TeamsCard';
 import { fetchTeams } from '../../actions';
+import Loader from '../loader/Loader';
 
 const styles = theme => ({
   root: {
@@ -26,7 +27,7 @@ class Teams extends React.Component {
   render() {
     const { classes, TeamsReducer } = this.props;
     const RenderCards = TeamsReducer.teams.map(team => (
-      <Grid item xs={3} key={team.primary_attribution}>
+      <Grid item xs={12} sm={6} lg={6} key={team.primary_attribution}>
         <TeamsCard
           className={classes.paper}
           name={team.name}
@@ -36,8 +37,8 @@ class Teams extends React.Component {
         />
       </Grid>
     ));
-    if (TeamsReducer.teams.length === 0) {
-      return <h1>Loading...</h1>;
+    if (TeamsReducer.isFetching === true) {
+      return <Loader />;
     }
 
     return (

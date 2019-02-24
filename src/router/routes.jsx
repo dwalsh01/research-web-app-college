@@ -10,7 +10,7 @@ const Routes = () => (
   <Switch>
     <Route exact path="/" component={GridCards} />
     <Route path="/profile" component={Profile} />
-    <Route path="/teams" component={Teams} />
+    <Route path="/teams/dashboard" component={Teams} />
     <Route path="/proposals" component={Proposals} />
     <Route component={NoMatch} />
   </Switch>

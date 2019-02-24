@@ -8,7 +8,7 @@ import { Icon } from '@material-ui/core';
 const styles = {
   card: {
     minWidth: 250,
-    height: '30vw'
+    height: '20vw'
   },
   bullet: {
     display: 'inline-block',

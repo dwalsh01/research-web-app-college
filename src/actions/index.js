@@ -6,7 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_ERROR,
   LOGOUT_BEGIN,
-  TEAMS_SUCCESS
+  TEAMS_SUCCESS,
+  TEAMS_BEGIN
 } from './actionType';
 
 const headers = {
@@ -50,10 +51,7 @@ export const login = (email, password) => dispatch => {
 export const startLogin = () => ({
   type: LOGIN_BEGIN
 });
-export const loginSuccess = data => ({
-  type: LOGIN_SUCCESS,
-  payload: data
-});
+
 export const loginError = msg => ({
   type: LOGIN_ERROR,
   payload: msg
@@ -66,7 +64,7 @@ export const logout = () => dispatch => {
     .then(response => response.data)
     .then(data => {
       if (data.logout === 'success') {
-        dispatch(noUser);
+        dispatch(noUser());
       }
     })
     .catch(error => console.log(error.message));
@@ -76,15 +74,19 @@ export const logoutBegin = () => ({
   type: LOGOUT_BEGIN
 });
 
-export const fetchTeams = () => dispatch =>
+export const fetchTeams = () => dispatch => {
+  dispatch(fetchTeamsBegin());
   axios
     .get('/api/get_teams')
     .then(response => response.data)
     .then(data => {
-      console.log('data fetched teams: ', data);
       dispatch(fetchTeamsSuccess(data.teams));
     })
     .catch(err => console.log(err));
+};
+export const fetchTeamsBegin = () => ({
+  type: TEAMS_BEGIN
+});
 
 export const fetchTeamsSuccess = teams => ({
   type: TEAMS_SUCCESS,

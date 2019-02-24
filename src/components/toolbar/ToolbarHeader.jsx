@@ -125,7 +125,7 @@ class ToolbarHeader extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              SFI Research Funding Application
+              SFI Research
             </Typography>
 
             <Icon>account_circle</Icon>

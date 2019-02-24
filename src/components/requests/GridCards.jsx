@@ -23,7 +23,7 @@ const GridCards = props => {
 
   return (
     <Grid container className={classes.root} spacing={16}>
-      <Grid key={1} item xs={6}>
+      <Grid item xs={12} sm={12} lg={6}>
         <RequestCard
           title="Accepted Requests"
           titleIcon={ICONS.ACCEPTED}
@@ -32,7 +32,7 @@ const GridCards = props => {
           <RequestsTable />
         </RequestCard>
       </Grid>
-      <Grid key={2} item xs={6}>
+      <Grid item xs={12} sm={12} lg={6}>
         <RequestCard
           title="Pending Requests"
           titleIcon={ICONS.PENDING}
@@ -41,7 +41,7 @@ const GridCards = props => {
           <RequestsTable />
         </RequestCard>
       </Grid>
-      <Grid key={3} item xs={6}>
+      <Grid item xs={12} sm={12} lg={6}>
         <RequestCard
           title="Rejected Requests"
           titleIcon={ICONS.REJECTED}
@@ -50,7 +50,7 @@ const GridCards = props => {
           <RequestsTable />
         </RequestCard>
       </Grid>
-      <Grid key={4} item xs={6}>
+      <Grid item xs={12} sm={12} lg={6}>
         <RequestCard title="Submit Requests" titleIcon={ICONS.SUBMIT} text="Submit Request" />
       </Grid>
     </Grid>

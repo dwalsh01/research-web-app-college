@@ -9,3 +9,4 @@ export const NO_USER = 'NO_USER';
 export const USER_DATA = 'USER_DATA';
 export const LOGOUT_BEGIN = 'LOGOUT_BEGIN';
 export const TEAMS_SUCCESS = 'TEAMS_SUCCESS';
+export const TEAMS_BEGIN = 'TEAMS_BEGIN';

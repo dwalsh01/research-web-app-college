@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 export default function ListItemLink({ route = '', text, ...props }) {
   return (
-    <ListItem button component={Link} to={`/${route}`}>
+    <ListItem button component={Link} to={`/${route}`} {...props}>
       <ListItemText primary={text} />
     </ListItem>
   );
