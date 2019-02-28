@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux';
-import AllGrants from './AllGrants';
 import currentUserReducer from './currentUserReducer';
 import TeamsReducer from './TeamsReducer';
+import EducationReducer from './EducationReducer';
+import AllProposals from './AllProposals';
+import proposalReducer from './proposalReducer';
 
 export default combineReducers({
-  AllGrants,
   currentUserReducer,
-  TeamsReducer
+  TeamsReducer,
+  EducationReducer,
+  AllProposals,
+  proposalReducer
 });

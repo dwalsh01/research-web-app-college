@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 
 // .ToolbarHeader-content-11 padding: 0
 const ErrorContainer = styled.div`
-  font-size: 150px;
+  font-size: 125px;
   font-weight: 300;
   text-align: center;
   h1 {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     position: relative;
   }
 `;

@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { Route } from 'react-router-dom';
 import PersonalForm from './forms/personal/PersonalFormPage';
 import pageTitle from '../../util/pageTitle';
+import EducationFormPage from './forms/education/EducationFormPage';
 
 const styles = theme => ({
   root: {
@@ -31,6 +32,7 @@ function ProfileGrid({ classes, profileCard }) {
           <Paper className={classes.paper}>
             <Route path="/profile/personal" component={PersonalForm} />
             <Route path="/profile/professional" component={Test2} />
+            <Route path="/profile/education" component={EducationFormPage} />
           </Paper>
         </Grid>
       </Grid>

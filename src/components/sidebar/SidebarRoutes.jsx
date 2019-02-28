@@ -21,7 +21,6 @@ const SidebarRoutes = ({ classes }) => (
     <ListItemLink text="Home" />
     <ListItemLink route="profile" text="Profile" />
     <ListItemLink route="proposals" text="Proposals" />
-    <ListItemLink route="teams" text="Teams" />
     <NestedItemLink />
   </List>
 );

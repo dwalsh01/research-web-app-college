@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { withStyles } from '@material-ui/core';
+import { register } from '../../actions';
 
 const RegisterSchema = Yup.object().shape({
   email: Yup.string()
@@ -18,20 +19,20 @@ const RegisterSchema = Yup.object().shape({
   password: Yup.string()
     .min(5, 'too short!')
     .required('Required!'),
-  f_name: Yup.string()
+  first_name: Yup.string()
     .min(1, 'too short!')
     .required('Required!'),
-  l_name: Yup.string()
+  second_name: Yup.string()
     .min(1, 'too short!')
     .required('Required!'),
   prefix: Yup.string()
     .min(1, 'too short!')
     .required('Required!'),
   suffix: Yup.string(),
-  phone_no: Yup.string()
+  phone: Yup.string()
     .min(5, 'too short!')
     .required('Required!'),
-  phone_ext: Yup.number(),
+  phone_extension: Yup.number(),
   job_title: Yup.string()
     .min(2, 'too short!')
     .required('Required!'),
@@ -79,13 +80,13 @@ class FormDialog extends React.Component {
             <DialogContentText>To Register, please enter your details below</DialogContentText>
             <Formik
               initialValues={{
-                f_name: '',
-                l_name: '',
+                first_name: '',
+                second_name: '',
                 prefix: '',
                 suffix: '',
                 job_title: '',
-                phone_no: '',
-                phone_ext: 0,
+                phone: '',
+                phone_extension: 353,
                 email: '',
                 password: '',
                 orcid: ''
@@ -93,6 +94,7 @@ class FormDialog extends React.Component {
               validationSchema={RegisterSchema}
               onSubmit={(values, { setSubmitting }) => {
                 console.log(values);
+                this.props.register(values);
                 this.handleClose();
                 setSubmitting(false);
               }}
@@ -114,12 +116,12 @@ class FormDialog extends React.Component {
                     className={classes.textField}
                   />
                   <TextField
-                    helperText={touched.f_name ? errors.f_name : ''}
-                    error={touched.f_name && Boolean(errors.f_name)}
-                    id="f_name"
-                    name="f_name"
+                    helperText={touched.first_name ? errors.first_name : ''}
+                    error={touched.first_name && Boolean(errors.first_name)}
+                    id="first_name"
+                    name="first_name"
                     label="First Name"
-                    value={values.f_name}
+                    value={values.first_name}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     margin="normal"
@@ -128,12 +130,12 @@ class FormDialog extends React.Component {
                     className={classes.textField}
                   />
                   <TextField
-                    helperText={touched.l_name ? errors.l_name : ''}
-                    error={touched.l_name && Boolean(errors.l_name)}
-                    id="l_name"
-                    name="l_name"
+                    helperText={touched.second_name ? errors.second_name : ''}
+                    error={touched.second_name && Boolean(errors.second_name)}
+                    id="second_name"
+                    name="second_name"
                     label="Last Name"
-                    value={values.l_name}
+                    value={values.second_name}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     margin="normal"
@@ -170,12 +172,12 @@ class FormDialog extends React.Component {
                     className={classes.textField}
                   />
                   <TextField
-                    helperText={touched.phone_no ? errors.phone_no : ''}
-                    error={touched.phone_no && Boolean(errors.phone_no)}
-                    id="phone_no"
-                    name="phone_no"
+                    helperText={touched.phone ? errors.phone : ''}
+                    error={touched.phone && Boolean(errors.phone)}
+                    id="phone"
+                    name="phone"
                     label="Phone Number"
-                    value={values.phone_no}
+                    value={values.phone}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     margin="normal"
@@ -184,12 +186,13 @@ class FormDialog extends React.Component {
                     className={classes.textField}
                   />
                   <TextField
-                    helperText={touched.phone_ext ? errors.phone_ext : ''}
-                    error={touched.phone_ext && Boolean(errors.phone_ext)}
-                    id="phone_ext"
-                    name="phone_ext"
+                    helperText={touched.phone_extension ? errors.phone_extension : ''}
+                    error={touched.phone_extension && Boolean(errors.phone_extension)}
+                    id="phone_extension"
+                    name="phone_extension"
                     label="Phone Extension"
-                    value={values.phone_ext}
+                    type="number"
+                    value={values.phone_extension}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     margin="normal"
@@ -231,7 +234,7 @@ class FormDialog extends React.Component {
                     id="orcid"
                     name="orcid"
                     label="ORCID"
-                    value={values.password}
+                    value={values.orcid}
                     onChange={handleChange}
                     onBlur={handleBlur}
                     margin="normal"
@@ -265,4 +268,7 @@ const mapStateToProps = ({ currentUserReducer }) => ({
   currentUserReducer
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(FormDialog));
+export default connect(
+  mapStateToProps,
+  { register }
+)(withStyles(styles)(FormDialog));

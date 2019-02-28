@@ -8,7 +8,7 @@ import { Icon } from '@material-ui/core';
 const styles = {
   card: {
     minWidth: 250,
-    height: '20vw'
+    minHeight: 500
   },
   bullet: {
     display: 'inline-block',
@@ -39,7 +39,7 @@ const RequestCard = ({ title, titleIcon, text, classes, children }) => (
         gutterBottom
         style={{ display: 'inline-flex', verticalAlign: 'middle' }}
       >
-        <Icon style={{ height: 30 }}>{titleIcon || ICONS.ACCEPTED}</Icon>
+        <Icon style={{ height: 30 }}>{titleIcon || ''}</Icon>
         <div style={{ height: 30 }}>{title}</div>
       </Typography>
       <Typography paragraph>{text}</Typography>

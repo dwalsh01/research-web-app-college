@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core';
+import { withStyles, Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import * as Yup from 'yup';
 
@@ -38,7 +38,7 @@ const styles = theme => ({
 });
 const UserForm = ({ user, ...props }) => (
   <div>
-    <h1>Personal Information</h1>
+    <Typography variant="h2">Personal Information</Typography>
     <Formik
       initialValues={user}
       validationSchema={UserSchema}

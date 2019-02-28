@@ -21,7 +21,7 @@ const styles = theme => ({
 
 class NestedItemLink extends React.Component {
   state = {
-    open: true
+    open: false
   };
 
   handleClick = () => {
