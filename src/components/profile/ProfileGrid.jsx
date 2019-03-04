@@ -25,13 +25,12 @@ function ProfileGrid({ classes, profileCard }) {
   return (
     <div className={classes.root}>
       <Grid container spacing={24}>
-        <Grid item xs={4}>
+        <Grid item xs={12} sm={4} lg={4}>
           {profileCard}
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={12} sm={8} lg={8}>
           <Paper className={classes.paper}>
             <Route path="/profile/personal" component={PersonalForm} />
-            <Route path="/profile/professional" component={Test2} />
             <Route path="/profile/education" component={EducationFormPage} />
           </Paper>
         </Grid>

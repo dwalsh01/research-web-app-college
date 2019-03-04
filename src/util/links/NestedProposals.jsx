@@ -19,7 +19,7 @@ const styles = theme => ({
   }
 });
 
-class NestedItemLink extends React.Component {
+class NestedProposals extends React.Component {
   state = {
     open: false
   };
@@ -34,12 +34,13 @@ class NestedItemLink extends React.Component {
     return (
       <div>
         <ListItem button onClick={this.handleClick}>
-          <ListItemText primary="Teams" />
+          <ListItemText primary="Proposals" />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemLink route="teams/dashboard" text="Dashboard" className={classes.nested} />
+            <ListItemLink route="proposals/all" text="View Proposals" className={classes.nested} />
+            <ListItemLink route="proposals/drafts" text="Drafts" className={classes.nested} />
           </List>
         </Collapse>
       </div>
@@ -47,4 +48,4 @@ class NestedItemLink extends React.Component {
   }
 }
 
-export default withStyles(styles)(NestedItemLink);
+export default withStyles(styles)(NestedProposals);

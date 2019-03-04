@@ -106,6 +106,7 @@ class ToolbarHeader extends React.Component {
   render() {
     const { classes, theme, children, currentUserReducer } = this.props;
     const { open } = this.state;
+    // console.log('user: ', currentUserReducer);
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -130,7 +131,11 @@ class ToolbarHeader extends React.Component {
 
             <Icon>account_circle</Icon>
 
-            <h3>{currentUserReducer.user ? currentUserReducer.user.email : ''}</h3>
+            <Typography variant="h6" style={{ color: 'white' }}>
+              {currentUserReducer.user
+                ? `${currentUserReducer.user.f_name} ${currentUserReducer.user.l_name}`
+                : ''}
+            </Typography>
             <Button variant="contained" className={classes.button} onClick={this.handleLogout}>
               Logout
             </Button>
@@ -150,7 +155,6 @@ class ToolbarHeader extends React.Component {
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
           </div>
-          {/* TODO: INSERT SIDEBAR HERE */}
           <SidebarRoutes />
         </Drawer>
         <main

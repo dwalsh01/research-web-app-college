@@ -7,6 +7,7 @@ import pageTitle from '../../util/pageTitle';
 import { getProposals } from '../../actions/index';
 import Loader from '../loader/Loader';
 import ProposalsTable from './ProposalsTable';
+import formatDate from '../../util/formatDate';
 
 const MyLink = props => <Link to={`/proposals/${props.id}`} {...props} />;
 
@@ -30,7 +31,23 @@ const Cols = [
       };
     }
   },
-  { title: 'Deadline Time', field: 'deadline_time' },
+  {
+    title: 'Deadline Time',
+    field: 'deadline_time',
+    render: rowData => <div>{formatDate(rowData.deadline_time)}</div>
+    // cellStyle: data => {
+    //   const compare = new Date(formatDate(data));
+    //   const now = new Date();
+    //   if (compare.getTime() >= now.getTime()) {
+    //     return {
+    //       color: red[500]
+    //     };
+    //   }
+    //   return {
+    //     color: green[500]
+    //   };
+    // }
+  },
   {
     title: 'Award Amount (€)',
     cellStyle: { fontWeight: 'bold' },
@@ -39,7 +56,11 @@ const Cols = [
   {
     title: 'See More Information',
     render: rowData => (
-      <Button color="primary" component={props => <MyLink id={rowData.id} {...props} />}>
+      <Button
+        color="primary"
+        variant="contained"
+        component={props => <MyLink id={rowData.id} {...props} />}
+      >
         Read More
       </Button>
     )
@@ -62,6 +83,7 @@ class Proposals extends React.Component {
           columns={Cols}
           data={AllProposals.proposals}
           title="Proposals"
+          rows
           options={{
             columnsButton: true,
             exportButton: true

@@ -18,7 +18,7 @@ const ProfileList = ({ classes }) => (
     <List className={classes.root}>
       <ListItemLink route="profile/personal" text="Personal" />
       <ListItemLink route="profile/education" text="Education" />
-      <ListItemLink route="profile/professional" text="Professional" />
+      {/* <ListItemLink route="profile/professional" text="Professional" /> */}
     </List>
   </div>
 );

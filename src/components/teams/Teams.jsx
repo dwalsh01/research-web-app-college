@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core';
+import { withStyles, Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import pageTitle from '../../util/pageTitle';
@@ -15,6 +15,11 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary
+  },
+  header: {
+    padding: 10,
+    margin: 'auto',
+    textAlign: 'center'
   }
 });
 
@@ -43,6 +48,9 @@ class Teams extends React.Component {
 
     return (
       <div className={classes.root}>
+        <Typography variant="h2" className={classes.header}>
+          Your Teams
+        </Typography>
         <Grid container spacing={24}>
           {RenderCards}
         </Grid>

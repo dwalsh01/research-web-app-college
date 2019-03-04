@@ -3,6 +3,7 @@ import List from '@material-ui/core/List';
 import { withStyles } from '@material-ui/core';
 import ListItemLink from '../../util/links/ListItemLink';
 import NestedItemLink from '../../util/links/NestedItemLink';
+import NestedProposals from '../../util/links/NestedProposals';
 // Profile
 // home
 // proposals
@@ -20,7 +21,7 @@ const SidebarRoutes = ({ classes }) => (
   <List className={classes.root}>
     <ListItemLink text="Home" />
     <ListItemLink route="profile" text="Profile" />
-    <ListItemLink route="proposals" text="Proposals" />
+    <NestedProposals />
     <NestedItemLink />
   </List>
 );

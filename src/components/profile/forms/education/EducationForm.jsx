@@ -4,7 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import * as Yup from 'yup';
+import { connect } from 'react-redux';
 import formatDate from '../../../../util/formatDate';
+import { postEducation } from '../../../../actions';
 
 const EducationSchema = Yup.object().shape({
   degree: Yup.string(),
@@ -33,7 +35,7 @@ const EducationForm = ({ education, ...props }) => (
       initialValues={education}
       validationSchema={EducationSchema}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
+        props.postEducation(values);
         setSubmitting(false);
       }}
     >
@@ -96,6 +98,7 @@ const EducationForm = ({ education, ...props }) => (
             name="year_degree_award"
             label="Year Degree Awarded"
             type="date"
+            value={formatDate(values.year_degree_award)}
             defaultValue={formatDate(values.year_degree_award)}
             className={props.classes.textField}
             onChange={handleChange}
@@ -118,4 +121,7 @@ const EducationForm = ({ education, ...props }) => (
   </div>
 );
 
-export default withStyles(styles)(EducationForm);
+export default connect(
+  null,
+  { postEducation }
+)(withStyles(styles)(EducationForm));

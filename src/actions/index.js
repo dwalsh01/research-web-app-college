@@ -14,12 +14,98 @@ import {
   PROPOSALS_ERROR,
   SPECIFIC_START,
   SPECIFIC_SUCCESS,
-  SPECIFIC_FAIL
+  SPECIFIC_FAIL,
+  DRAFT_BEGIN,
+  DRAFT_ERROR,
+  DRAFT_SUCCESS,
+  ALL_DRAFT_BEGIN,
+  ALL_DRAFT_SUCCESS,
+  ALL_DRAFT_ERROR,
+  ALL_DRAFT_NONE,
+  EDUCATION_ERROR,
+  EDUCATION_POST_START,
+  EDUCATION_POST_ERROR,
+  EDUCATION_POST_SUCCESS
 } from './actionType';
 
 const headers = {
   'Content-Type': 'application/json'
 };
+
+// const fileHeaders = {
+//   'Content-Type': 'multipart/form-data'
+// };
+
+// TODO: IMPLEMENT THIS
+// export function submitDraftWithImage(formInfo, image = []) {
+//   const formData = new FormData();
+//   image.forEach(img => formData.append('image', img.file));
+//   formData.append('data', formInfo);
+//   axios
+//     .post('/apply/', formData, { fileHeaders })
+//     .then(response => {
+//       console.log(response.data);
+//       return response.data;
+//     })
+//     .catch(err => console.log(err.message));
+// }
+
+export function submitDraft(formData) {
+  return dispatch => {
+    axios
+      .post(`/calls/apply/${formData.id}/draft`, { formData }, { headers })
+      .then(response => {
+        dispatch(submitDraftSuccess(response.data.message));
+      })
+      .catch(err => dispatch(submitDraftError(err.message)));
+  };
+}
+
+export const submitDraftBegin = () => ({
+  type: DRAFT_BEGIN
+});
+
+export const submitDraftSuccess = message => ({
+  type: DRAFT_SUCCESS,
+  payload: message
+});
+export const submitDraftError = message => ({
+  type: DRAFT_ERROR,
+  payload: message
+});
+
+export function fetchAllDrafts() {
+  return dispatch => {
+    dispatch(fetchAllDraftsBegin());
+    axios
+      .get('/calls/apply/draft/all')
+      .then(({ data }) => {
+        if (data.message) {
+          return dispatch(noDraftsCurrently(data.message));
+        }
+        return dispatch(fetchAllDraftsSuccess(data));
+      })
+      .catch(err => dispatch(fetchAllDraftsError(err.message)));
+  };
+}
+
+export const noDraftsCurrently = message => ({
+  type: ALL_DRAFT_NONE,
+  payload: message
+});
+export const fetchAllDraftsBegin = () => ({
+  type: ALL_DRAFT_BEGIN
+});
+
+export const fetchAllDraftsSuccess = drafts => ({
+  type: ALL_DRAFT_SUCCESS,
+  payload: drafts
+});
+
+export const fetchAllDraftsError = message => ({
+  type: ALL_DRAFT_ERROR,
+  payload: message
+});
 
 export function currentUser() {
   return dispatch => {
@@ -30,14 +116,15 @@ export function currentUser() {
         if (data.user === 0) {
           return dispatch(noUser());
         }
-        return dispatch(userLoginData(data.user));
+        // console.log(data);
+        return dispatch(userLoginData(data));
       });
   };
 }
 
-export const userLoginData = user => ({
+export const userLoginData = data => ({
   type: USER_DATA,
-  payload: user
+  payload: data
 });
 
 export const noUser = () => ({
@@ -53,7 +140,7 @@ export function fetchEducation() {
       .get('/profile/education')
       .then(response => response.data)
       .then(data => dispatch(educationSuccess(data.education)))
-      .catch(err => console.log(err.message));
+      .catch(err => dispatch(educationError(err.response.data.message)));
   };
 }
 
@@ -66,6 +153,31 @@ export const educationSuccess = education => ({
   payload: education
 });
 
+export const educationError = message => ({
+  type: EDUCATION_ERROR,
+  payload: message
+});
+
+export function postEducation(education) {
+  return dispatch => {
+    dispatch(EducationPostBegin());
+    axios
+      .post('/profile/education', education, { headers })
+      .then(response => console.log(response.data))
+      .catch(err => console.log(err.message));
+  };
+}
+
+export const EducationPostBegin = () => ({
+  type: EDUCATION_POST_START
+});
+export const educationPostErr = msg => ({
+  type: EDUCATION_POST_ERROR,
+  payload: msg
+});
+export const educationPostSuccess = data => ({
+  type: EDUCATION_POST_SUCCESS
+});
 export function login(email, password) {
   return dispatch => {
     dispatch(startLogin());

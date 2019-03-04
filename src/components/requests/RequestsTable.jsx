@@ -40,7 +40,7 @@ function SimpleTable(props) {
           <TableRow>
             <TableCell>Application ID</TableCell>
             <TableCell>Application Title</TableCell>
-            <TableCell>Team Name</TableCell>
+            {/* <TableCell>Team Name</TableCell> */}
             <TableCell>Application Status</TableCell>
           </TableRow>
         </TableHead>
@@ -51,7 +51,7 @@ function SimpleTable(props) {
                 {row.id}
               </TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.team}</TableCell>
+              {/* <TableCell>{row.team}</TableCell> */}
               <TableCell>{row.status}</TableCell>
             </TableRow>
           ))}

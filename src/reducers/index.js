@@ -4,11 +4,17 @@ import TeamsReducer from './TeamsReducer';
 import EducationReducer from './EducationReducer';
 import AllProposals from './AllProposals';
 import proposalReducer from './proposalReducer';
+import proposalDraftReducer from './proposalDraft';
+import AllDraftsReducer from './AllDraftsReducer';
+import PostEducationReducer from './PostEducationReducer';
 
 export default combineReducers({
   currentUserReducer,
   TeamsReducer,
   EducationReducer,
   AllProposals,
-  proposalReducer
+  proposalReducer,
+  proposalDraftReducer,
+  AllDraftsReducer,
+  PostEducationReducer
 });

@@ -86,22 +86,12 @@ class TeamsCard extends React.Component {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              {/* <Typography className={classes.statusTextRejected} variant="subtitle2" color="textSecondary">
-                Status: Rejected
-              </Typography> */}
-              <Typography
+              {/* <Typography
                 className={classes.statusTextSuccess}
                 variant="subtitle2"
                 color="textSecondary"
               >
                 Status: Success
-              </Typography>
-              {/* <Typography
-                className={classes.statusTextPending}
-                variant="subtitle2"
-                color="textSecondary"
-              >
-                Status: Pending Approval
               </Typography> */}
             </Grid>
           </Grid>
