@@ -68,8 +68,11 @@ const Cols = [
 ];
 class Proposals extends React.Component {
   componentDidMount() {
+    const { AllProposals } = this.props;
     pageTitle('Proposals');
-    this.props.getProposals();
+    if (AllProposals.proposals.length === 0) {
+      this.props.getProposals();
+    }
   }
 
   render() {

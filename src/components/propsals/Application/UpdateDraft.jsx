@@ -298,7 +298,9 @@ class UpdateDraft extends React.Component {
                                 variant="contained"
                                 className={classes.button}
                                 style={{ display: 'inline', minWidth: '500' }}
-                                onClick={() => arrayHelpers.remove(index)}
+                                onClick={() => {
+                                  arrayHelpers.remove(index);
+                                }}
                               >
                                 Remove
                               </Button>
@@ -309,7 +311,9 @@ class UpdateDraft extends React.Component {
                               variant="contained"
                               className={classes.button}
                               style={{ display: 'inline', minWidth: '500' }}
-                              onClick={() => arrayHelpers.push({ email: '' })}
+                              onClick={() => {
+                                arrayHelpers.push({ email: '' });
+                              }}
                             >
                               Add New Co-Applicant
                             </Button>
@@ -371,7 +375,9 @@ class UpdateDraft extends React.Component {
                                 variant="contained"
                                 className={classes.button}
                                 style={{ display: 'inline', minWidth: '500' }}
-                                onClick={() => arrayHelpers.remove(index)}
+                                onClick={() => {
+                                  arrayHelpers.remove(index);
+                                }}
                               >
                                 Remove
                               </Button>

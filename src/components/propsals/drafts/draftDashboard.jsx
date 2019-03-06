@@ -1,13 +1,14 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import { Grid, withStyles, Typography } from '@material-ui/core';
-import { red, green, yellow } from '@material-ui/core/colors';
+import { red, yellow } from '@material-ui/core/colors';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import pageTitle from '../../../util/pageTitle';
 import DashboardItem from './dashboardItem';
-import { fetchAllDrafts } from '../../../actions';
+import { fetchAllDrafts, getProposals, resetDeleteDraft } from '../../../actions';
 import Loader from '../../loader/Loader';
+import DeleteNotification from './DeleteNotification';
 
 const styles = theme => ({
   root: {
@@ -26,12 +27,14 @@ const styles = theme => ({
     backgroundColor: red[200],
     textAlign: 'center'
   },
-  statusTextSuccess: {
+  statusText: {
+    fontSize: 20,
+    fontWeight: 300,
     padding: 2,
     marginBottom: 12,
     marginTop: 12,
-    color: green[900],
-    backgroundColor: green[200],
+    // color: green[900],
+    // backgroundColor: green[200],
     textAlign: 'center'
   },
   statusTextPending: {
@@ -71,19 +74,26 @@ const styles = theme => ({
 });
 class draftDashboard extends React.Component {
   componentDidMount() {
+    const { proposals } = this.props;
     pageTitle('Drafts Dashboard');
     this.props.fetchAllDrafts();
+    if (proposals.proposals.length === 0) {
+      this.props.getProposals();
+    }
+    this.props.resetDeleteDraft();
   }
 
   render() {
-    const { classes, Alldrafts } = this.props;
+    const { classes, Alldrafts, proposals, deleteStatus } = this.props;
     const { fetching, error, errorMsg, drafts, message } = Alldrafts;
-    const renderDrafts = drafts.map(draft => (
-      <Grid key={draft.id} item xs={12} sm={6} lg={4}>
-        <DashboardItem draft={draft.draft.formData} {...this.props} />
-      </Grid>
-    ));
-    if (fetching) {
+    const sortedRender = drafts
+      .sort(({ id: previousID }, { id: currentID }) => currentID - previousID)
+      .map(draft => (
+        <Grid key={draft.id} item xs={12} sm={6} lg={4}>
+          <DashboardItem id={draft.id} draft={draft.draft.formData} {...this.props} />
+        </Grid>
+      ));
+    if (fetching || proposals.isFetching) {
       return <Loader />;
     }
     if (error) {
@@ -111,18 +121,22 @@ class draftDashboard extends React.Component {
           Your Drafts
         </Typography>
         <Grid container spacing={24}>
-          {renderDrafts}
+          {sortedRender}
         </Grid>
+        {deleteStatus.success && <DeleteNotification message={deleteStatus.message} />}
+        {deleteStatus.error && <DeleteNotification message={deleteStatus.message} />}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ AllDraftsReducer }) => ({
-  Alldrafts: AllDraftsReducer
+const mapStateToProps = ({ AllDraftsReducer, AllProposals, DeleteDraftReducer }) => ({
+  Alldrafts: AllDraftsReducer,
+  proposals: AllProposals,
+  deleteStatus: DeleteDraftReducer
 });
 
 export default connect(
   mapStateToProps,
-  { fetchAllDrafts }
+  { fetchAllDrafts, getProposals, resetDeleteDraft }
 )(withStyles(styles)(draftDashboard));

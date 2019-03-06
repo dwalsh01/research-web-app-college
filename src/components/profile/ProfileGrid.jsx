@@ -18,8 +18,6 @@ const styles = theme => ({
   }
 });
 
-const Test2 = () => <h1>Test2</h1>;
-
 function ProfileGrid({ classes, profileCard }) {
   pageTitle('Profile');
   return (

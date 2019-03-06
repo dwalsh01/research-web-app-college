@@ -29,7 +29,11 @@ import {
   SPECIFIC_DRAFT_SUCCESS,
   SPECIFIC_DRAFT_ERROR,
   SPECIFIC_DRAFT_START,
-  DRAFT_RESET
+  DRAFT_RESET,
+  DELETE_DRAFT_START,
+  DELETE_DRAFT_SUCCESS,
+  DELETE_DRAFT_ERROR,
+  DELETE_DRAFT_RESET
 } from './actionType';
 
 const headers = {
@@ -310,11 +314,40 @@ export const fullProposalStart = () => ({ type: SPECIFIC_START });
 export const fullProposalSuccess = data => ({ type: SPECIFIC_SUCCESS, payload: data });
 export const fullProposalError = msg => ({ type: SPECIFIC_FAIL, payload: msg });
 
-// export function updatePersonalInfo(info) {
-//   return dispatch => {
-//     axios.post('/api/update_personal', )
-//   }
-// }
+export function deleteDraft(id) {
+  return dispatch => {
+    dispatch(deleteDraftStart());
+    axios
+      .get(`/calls/apply/draft/delete/${id}`)
+      .then(response => {
+        dispatch(deleteDraftSuccess(response.data.message));
+        dispatch(fetchAllDrafts());
+      })
+      .catch(err => dispatch(deleteDraftError(err.message)));
+  };
+}
+
+export function resetDeleteDraft() {
+  return dispatch => {
+    dispatch(deleteDraftReset());
+  };
+}
+
+export const deleteDraftReset = () => ({
+  type: DELETE_DRAFT_RESET
+});
+export const deleteDraftStart = () => ({
+  type: DELETE_DRAFT_START
+});
+export const deleteDraftSuccess = msg => ({
+  type: DELETE_DRAFT_SUCCESS,
+  payload: msg
+});
+export const deleteDraftError = msg => ({
+  type: DELETE_DRAFT_ERROR,
+  payload: msg
+});
+
 export function fetchTeams() {
   return dispatch => {
     dispatch(fetchTeamsBegin());

@@ -8,6 +8,7 @@ import proposalDraftReducer from './proposalDraft';
 import AllDraftsReducer from './AllDraftsReducer';
 import PostEducationReducer from './PostEducationReducer';
 import SpecificDraftReducer from './SpecificDraftReducer';
+import DeleteDraftReducer from './DeleteDraftReducer';
 
 export default combineReducers({
   currentUserReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   proposalDraftReducer,
   AllDraftsReducer,
   PostEducationReducer,
-  SpecificDraftReducer
+  SpecificDraftReducer,
+  DeleteDraftReducer
 });
