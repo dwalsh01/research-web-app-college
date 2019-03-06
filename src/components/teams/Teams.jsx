@@ -30,6 +30,7 @@ class Teams extends React.Component {
   }
 
   render() {
+    console.log('rendered');
     const { classes, TeamsReducer } = this.props;
     const RenderCards = TeamsReducer.teams.map(team => (
       <Grid item xs={12} sm={6} lg={6} key={team.primary_attribution}>

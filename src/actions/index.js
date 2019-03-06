@@ -25,7 +25,11 @@ import {
   EDUCATION_ERROR,
   EDUCATION_POST_START,
   EDUCATION_POST_ERROR,
-  EDUCATION_POST_SUCCESS
+  EDUCATION_POST_SUCCESS,
+  SPECIFIC_DRAFT_SUCCESS,
+  SPECIFIC_DRAFT_ERROR,
+  SPECIFIC_DRAFT_START,
+  DRAFT_RESET
 } from './actionType';
 
 const headers = {
@@ -107,6 +111,41 @@ export const fetchAllDraftsError = message => ({
   payload: message
 });
 
+export function fetchSpecificDraft(id) {
+  return dispatch => {
+    dispatch(fetchDraftStart());
+    axios
+      .get(`/calls/apply/${id}/draft`)
+      .then(response => {
+        dispatch(fetchDraftSuccess(response.data));
+      })
+      .catch(err => dispatch(fetchDraftError(err.message)));
+  };
+}
+
+export function resetPostDraft() {
+  return dispatch => {
+    dispatch(resetDraftPost());
+  };
+}
+
+export const resetDraftPost = () => ({
+  type: DRAFT_RESET
+});
+export const fetchDraftStart = () => ({
+  type: SPECIFIC_DRAFT_START
+});
+
+export const fetchDraftSuccess = data => ({
+  type: SPECIFIC_DRAFT_SUCCESS,
+  payload: data
+});
+
+export const fetchDraftError = msg => ({
+  type: SPECIFIC_DRAFT_ERROR,
+  payload: msg
+});
+
 export function currentUser() {
   return dispatch => {
     axios
@@ -116,7 +155,6 @@ export function currentUser() {
         if (data.user === 0) {
           return dispatch(noUser());
         }
-        // console.log(data);
         return dispatch(userLoginData(data));
       });
   };
@@ -185,7 +223,6 @@ export function login(email, password) {
       .post('/login_user', { email, password }, { headers })
       .then(response => response.data)
       .then(data => {
-        console.log(data);
         dispatch(userLoginData(data));
         return data;
       })

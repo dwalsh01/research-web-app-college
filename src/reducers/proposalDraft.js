@@ -1,4 +1,4 @@
-import { DRAFT_BEGIN, DRAFT_SUCCESS, DRAFT_ERROR } from '../actions/actionType';
+import { DRAFT_BEGIN, DRAFT_SUCCESS, DRAFT_ERROR, DRAFT_RESET } from '../actions/actionType';
 
 const initialState = {
   submitting: false,
@@ -30,6 +30,8 @@ export default function proposalDraftReducer(state = initialState, action) {
         errorMsg: action.payload,
         successMsg: ''
       };
+    case DRAFT_RESET:
+      return initialState;
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { AbilityBuilder, Ability } from '@casl/ability';
+import { Ability, AbilityBuilder } from '@casl/ability';
 import store from '../store/index';
 
 // Defines how to detect object's type
@@ -15,7 +15,7 @@ const ability = new Ability([], { subjectName });
 let currentAuth;
 store.subscribe(() => {
   const prevAuth = currentAuth;
-  currentAuth = store.getState().currentUserReducer();
+  currentAuth = store.getState().currentUserReducer;
 
   if (prevAuth !== currentAuth) {
     ability.update(defineRulesFor(currentAuth));
@@ -23,9 +23,11 @@ store.subscribe(() => {
 });
 
 function defineRulesFor(auth) {
-  const { can, rules } = AbilityBuilder.extract();
-
-  can(('visit', '/protected/route'), 'admin', { userId: auth.user.id });
+  const { can, rules, cannot } = AbilityBuilder.extract();
+  if (auth.role === 'researcher') {
+    can('view', 'Researcher', { userId: auth.user.id });
+    cannot('view', 'Admin', { userId: auth.user.id });
+  }
 
   return rules;
 }

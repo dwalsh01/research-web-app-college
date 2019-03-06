@@ -15,7 +15,12 @@ import Loader from '../../loader/Loader';
 // import FileUpload from './FileUpload';
 import priorities from './priorities';
 import ProposalSchema from './ProposalSchema';
-import { submitDraft, fetchAllDrafts } from '../../../actions/index';
+import {
+  submitDraft,
+  getFullProposal,
+  fetchSpecificDraft,
+  resetDraftPost
+} from '../../../actions/index';
 
 const styles = theme => ({
   root: {
@@ -59,7 +64,7 @@ const styles = theme => ({
   }
 });
 
-class ProposalApplication extends React.Component {
+class UpdateDraft extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -68,6 +73,7 @@ class ProposalApplication extends React.Component {
   }
 
   componentDidMount() {
+    const { match } = this.props;
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => response.data)
@@ -76,28 +82,20 @@ class ProposalApplication extends React.Component {
           countries: data
         })
       );
-    this.props.fetchAllDrafts();
+    this.props.getFullProposal(match.params.id);
+    this.props.fetchSpecificDraft(match.params.id);
+    this.props.resetDraftPost();
   }
 
   render() {
-    const { classes, match, allDrafts } = this.props;
-    console.log(match);
-    // const { drafts } = allDrafts;
+    const { classes, match, proposal, draft } = this.props;
     const { countries } = this.state;
-    // const decideVals = drafts.map(draft => {
-    //   if (Object.prototype.hasOwnProperty.call(draft, 'id')) {
-    //     if (draft.id === parseInt(match.params.id, 10)) {
-    //       return draft.draft.formData;
-    //     }
-    //   }
-    //   return initalVals;
-    // });
     const renderCountries = countries.map(country => (
       <MenuItem key={country.name} value={country.name}>
         {country.name}
       </MenuItem>
     ));
-    if (countries.length === 0 || allDrafts.fetching) {
+    if (countries.length === 0 || proposal.isFetching || draft.fetching) {
       return <Loader />;
     }
     return (
@@ -109,36 +107,12 @@ class ProposalApplication extends React.Component {
           View proposal again button here
         </Typography>
         <Formik
-          initialValues={{
-            title: '',
-            duration: '',
-            nprArea: '',
-            proposal_legal_remit: '',
-            ethicalAnimals: '',
-            ethicalMaterials: '',
-            country: '',
-            coApplicants: [
-              {
-                email: ''
-              }
-            ],
-            collaborators: [
-              {
-                name: '',
-                email: '',
-                org: ''
-              }
-            ],
-            scientificAbstract: '',
-            layAbstract: ''
-          }}
+          initialValues={draft.formData}
           validationSchema={ProposalSchema}
           onSubmit={(values, { setSubmitting }) => {
-            console.log(values);
             const clone = values;
             delete clone.files;
             clone.id = match.params.id;
-            console.log(clone);
 
             setSubmitting(false);
           }}
@@ -470,13 +444,14 @@ class ProposalApplication extends React.Component {
     );
   }
 }
-const mapStateToProps = ({ AllDraftsReducer }) => ({
-  allDrafts: AllDraftsReducer
+const mapStateToProps = ({ proposalReducer, SpecificDraftReducer }) => ({
+  proposal: proposalReducer,
+  draft: SpecificDraftReducer
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { submitDraft, fetchAllDrafts }
-  )(withStyles(styles)(ProposalApplication))
+    { submitDraft, getFullProposal, fetchSpecificDraft, resetDraftPost }
+  )(withStyles(styles)(UpdateDraft))
 );

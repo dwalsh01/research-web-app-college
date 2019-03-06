@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core';
 import ListItemLink from '../../util/links/ListItemLink';
 import NestedItemLink from '../../util/links/NestedItemLink';
 import NestedProposals from '../../util/links/NestedProposals';
+import Can from '../../config/Can';
 // Profile
 // home
 // proposals
@@ -20,9 +21,13 @@ const styles = theme => ({
 const SidebarRoutes = ({ classes }) => (
   <List className={classes.root}>
     <ListItemLink text="Home" />
-    <ListItemLink route="profile" text="Profile" />
+    <Can I="view" a="Researcher">
+      {() => <ListItemLink route="profile" text="Profile" />}
+    </Can>
     <NestedProposals />
-    <NestedItemLink />
+    <Can I="view" a="Researcher">
+      {() => <NestedItemLink />}
+    </Can>
   </List>
 );
 

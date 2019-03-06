@@ -1,10 +1,25 @@
 import React from 'react';
-import { Paper, Typography, Divider, Grid, Icon } from '@material-ui/core';
+import { Paper, Typography, Divider, Grid, Icon, Button } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import { Link } from 'react-router-dom';
 
+const MyLink = props => <Link to={`/proposals/update/${props.id}`} {...props} />;
+
+function ButtonLink({ to, text = 'Update Draft' }) {
+  return (
+    <Button
+      color="primary"
+      variant="contained"
+      component={props => <MyLink id={to} {...props} />}
+      style={{ marginTop: 10 }}
+    >
+      {text}
+    </Button>
+  );
+}
 function checkIfInObj(obj) {
   const keysCheck = ['name', 'org', 'email'];
   let found = false;
@@ -95,6 +110,9 @@ export default function DashboardItem({ draft, ...props }) {
           Form Completion
         </Typography>
         <List>{renderList}</List>
+        <Divider />
+
+        <ButtonLink to={draft.id} />
       </Paper>
     </div>
   );

@@ -7,6 +7,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ListItemLink from './ListItemLink';
+import Can from '../../config/Can';
 
 const styles = theme => ({
   root: {
@@ -39,8 +40,18 @@ class NestedProposals extends React.Component {
         </ListItem>
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemLink route="proposals/all" text="View Proposals" className={classes.nested} />
-            <ListItemLink route="proposals/drafts" text="Drafts" className={classes.nested} />
+            <Can I="view" a="Researcher">
+              {() => (
+                <div>
+                  <ListItemLink
+                    route="proposals/all"
+                    text="View Proposals"
+                    className={classes.nested}
+                  />
+                  <ListItemLink route="proposals/drafts" text="Drafts" className={classes.nested} />
+                </div>
+              )}
+            </Can>
           </List>
         </Collapse>
       </div>

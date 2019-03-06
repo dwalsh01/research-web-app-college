@@ -5,8 +5,6 @@ import PostMsg from './PostMsg';
 
 function EducationFormPage(props) {
   const { EducationReducer, PostEducationReducer } = props;
-  console.log(PostEducationReducer);
-
   return (
     <div>
       <EducationForm education={EducationReducer.education} />

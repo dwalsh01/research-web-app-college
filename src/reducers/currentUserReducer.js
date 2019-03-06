@@ -30,7 +30,7 @@ export default function currentUserReducer(state = initialState, action) {
         errorMsg: ''
       };
     case NO_USER:
-      return initialState;
+      return { isLoggedIn: false, user: null, role: '', errorMsg: '' };
     default:
       return state;
   }
