@@ -25,10 +25,16 @@ store.subscribe(() => {
 function defineRulesFor(auth) {
   const { can, rules, cannot } = AbilityBuilder.extract();
   if (auth.role === 'researcher') {
-    can('view', 'Researcher', { userId: auth.user.id });
-    cannot('view', 'Admin', { userId: auth.user.id });
+    can('view', 'Proposal', { userId: auth.user.id });
+    cannot('add', 'Proposal', { userId: auth.user.id });
+    can('view', 'Draft', { userId: auth.user.id });
+    can('view', 'Profile', { userId: auth.user.id });
+    can('view', 'Teams', { userId: auth.user.id });
   }
-
+  if (auth.role === 'admin') {
+    can('add', 'Proposal', { userId: auth.user.id });
+    can('review', 'Application', { userId: auth.user.id });
+  }
   return rules;
 }
 

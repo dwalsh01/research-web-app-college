@@ -21,11 +21,11 @@ const styles = theme => ({
 const SidebarRoutes = ({ classes }) => (
   <List className={classes.root}>
     <ListItemLink text="Home" />
-    <Can I="view" a="Researcher">
+    <Can I="view" a="Profile">
       {() => <ListItemLink route="profile" text="Profile" />}
     </Can>
     <NestedProposals />
-    <Can I="view" a="Researcher">
+    <Can I="view" a="Teams">
       {() => <NestedItemLink />}
     </Can>
   </List>

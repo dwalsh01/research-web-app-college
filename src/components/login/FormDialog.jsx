@@ -66,7 +66,7 @@ class FormDialog extends React.Component {
 
   render() {
     const { open } = this.state;
-    const { classes, currentUserReducer } = this.props;
+    const { classes } = this.props;
     return (
       <div>
         <Button variant="contained" size="large" onClick={this.handleClickOpen}>
@@ -83,18 +83,15 @@ class FormDialog extends React.Component {
               validationSchema={LoginSchema}
               onSubmit={(values, { setSubmitting }) => {
                 this.props.login(values.email, values.password);
-                if (currentUserReducer.errorMsg.length > 0) {
-                  console.log('invalid information passed: ', currentUserReducer.errorMsg);
-                }
                 this.handleClose();
                 setSubmitting(false);
               }}
             >
-              {({ isValid, errors, handleChange, values, isSubmitting }) => (
+              {({ isValid, errors, handleChange, values, isSubmitting, touched }) => (
                 <Form className={classes.container}>
                   <TextField
-                    helperText={errors.email || ''}
-                    error={Boolean(errors.email)}
+                    helperText={touched.email ? errors.email : ''}
+                    error={touched.email && Boolean(errors.email)}
                     id="email"
                     name="email"
                     label="Email"
@@ -106,8 +103,8 @@ class FormDialog extends React.Component {
                     className={classes.textField}
                   />
                   <TextField
-                    helperText={errors.password || ''}
-                    error={Boolean(errors.prefix)}
+                    helperText={touched.email ? errors.password : ''}
+                    error={touched.password && Boolean(errors.prefix)}
                     id="password"
                     name="password"
                     label="Password"

@@ -64,7 +64,6 @@ const styles = theme => ({
   },
   actualLink: {
     color: '#3f51b5',
-    marginLeft: 5,
     paddingBottom: 1,
     textDecoration: ' none',
     borderBottom: '1px solid #3f51b5',

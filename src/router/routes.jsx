@@ -8,9 +8,10 @@ import Teams from '../components/teams/Teams';
 import ProposalsInfo from '../components/propsals/Information/ProposalsInfo';
 import ApplicationForm from '../components/propsals/Application/ApplicationForm';
 import draftDashboard from '../components/propsals/drafts/draftDashboard';
-import AppProposalPage from '../components/propsals/admin/AddProposal/AppProposalPage';
+import AppProposalPage from '../components/propsals/admin/AddProposal/AddProposalPage';
 import Can from '../config/Can';
 import UpdateDraftPage from '../components/propsals/Application/UpdateDraftPage';
+import RespondHomePage from '../components/propsals/admin/respond/RespondHomePage';
 
 const Routes = () => (
   <Switch>
@@ -20,8 +21,17 @@ const Routes = () => (
       exact
       path="/admin/proposals"
       render={props => (
-        <Can I="view" a="Admin">
+        <Can I="add" a="Proposal">
           {() => <AppProposalPage {...props} />}
+        </Can>
+      )}
+    />
+    <Route
+      exact
+      path="/admin/proposals/respond"
+      render={props => (
+        <Can I="accept" a="Application">
+          {() => <RespondHomePage {...props} />}
         </Can>
       )}
     />
@@ -31,7 +41,7 @@ const Routes = () => (
       exact
       path="/proposals/all"
       render={props => (
-        <Can I="view" a="Researcher">
+        <Can I="view" a="Proposal">
           {() => <Proposals {...props} />}
         </Can>
       )}
@@ -40,7 +50,7 @@ const Routes = () => (
       exact
       path="/proposals/:id"
       render={props => (
-        <Can I="view" a="Researcher">
+        <Can I="view" a="Proposal">
           {() => <ProposalsInfo {...props} />}
         </Can>
       )}
@@ -49,7 +59,7 @@ const Routes = () => (
       exact
       path="/proposals/update/:id"
       render={props => (
-        <Can I="view" a="Researcher">
+        <Can I="view" a="Draft">
           {() => <UpdateDraftPage {...props} />}
         </Can>
       )}

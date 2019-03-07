@@ -33,7 +33,10 @@ import {
   DELETE_DRAFT_START,
   DELETE_DRAFT_SUCCESS,
   DELETE_DRAFT_ERROR,
-  DELETE_DRAFT_RESET
+  DELETE_DRAFT_RESET,
+  SUBMIT_APPLICATION_START,
+  SUBMIT_APPLICATION_ERROR,
+  SUBMIT_APPLICATION_SUCCESS
 } from './actionType';
 
 const headers = {
@@ -57,6 +60,49 @@ const headers = {
 //     })
 //     .catch(err => console.log(err.message));
 // }
+export function submitApplication(application) {
+  const shape = {
+    proposal_id: application.id,
+    title: application.data.title,
+    duration: application.data.duration,
+    amount_required: 100000,
+    nrp_area: application.data.nprArea,
+    textbox: application.data.proposal_legal_remit,
+    animal_statement: application.data.ethicalAnimals,
+    human_statement: application.data.ethicalMaterials,
+    applicant_country: application.data.country,
+    abstract: application.data.scientificAbstract,
+    lay_abstract: application.data.layAbstract,
+    signed: false,
+    list_of_co_applicants: application.data.coApplicants,
+    list_of_collaborators: application.data.collaborators
+  };
+  console.log(shape);
+  return dispatch => {
+    dispatch(submitApplicationStart());
+    axios
+      .post(`/calls/apply/${application.id}`, shape, { headers })
+      .then(response => {
+        console.log('response post data: ', response);
+        dispatch(submitApplicationSuccess(response.data));
+      })
+      .catch(err => {
+        console.log(err.message);
+        dispatch(submitApplicationError(err.message));
+      });
+  };
+}
+export const submitApplicationStart = () => ({
+  type: SUBMIT_APPLICATION_START
+});
+export const submitApplicationSuccess = msg => ({
+  type: SUBMIT_APPLICATION_SUCCESS,
+  payload: msg
+});
+export const submitApplicationError = msg => ({
+  type: SUBMIT_APPLICATION_ERROR,
+  payload: msg
+});
 
 export function submitDraft(formData) {
   return dispatch => {

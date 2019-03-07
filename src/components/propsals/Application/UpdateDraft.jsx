@@ -103,9 +103,9 @@ class UpdateDraft extends React.Component {
         <Typography variant="h2" style={{ padding: 20 }}>
           Proposal Application
         </Typography>
-        <Typography variant="subheading" style={{ paddingBottom: 5 }}>
+        {/* <Typography variant="subheading" style={{ paddingBottom: 5 }}>
           View proposal again button here
-        </Typography>
+        </Typography> */}
         <Formik
           initialValues={draft.formData}
           validationSchema={ProposalSchema}

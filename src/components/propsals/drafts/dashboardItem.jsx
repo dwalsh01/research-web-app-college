@@ -10,7 +10,19 @@ import { connect } from 'react-redux';
 import { deleteDraft } from '../../../actions/index';
 
 const MyLink = props => <Link to={`/proposals/update/${props.id}`} {...props} />;
-
+const keysToTitle = {
+  coApplicants: 'Co-Applicants',
+  collaborators: 'Collaborators',
+  country: 'Country',
+  duration: 'Duration',
+  ethicalAnimals: 'Animal Use',
+  ethicalMaterials: 'Human Participation, Biological Material, etc.',
+  layAbstract: 'Lay Abstract',
+  proposal_legal_remit: 'SFI Legal Remit',
+  scientificAbstract: 'Scientific Abstract',
+  title: 'Title',
+  nprArea: 'National Research Priority Area'
+};
 function ButtonLink({ to, text = 'Update Draft' }) {
   return (
     <Button
@@ -82,32 +94,32 @@ function DashboardItem({ id, proposals, draft, ...props }) {
           return (
             <ListItem key={key}>
               <ListItemIcon>{successMsg}</ListItemIcon>
-              <ListItemText primary={key} />
+              <ListItemText primary={keysToTitle[key]} />
             </ListItem>
           );
         }
         return (
           <ListItem key={key}>
             <ListItemIcon>{errorMsg}</ListItemIcon>
-            <ListItemText primary={key} />
-          </ListItem>
-        );
-      }
-      if (draft[key] && draft[key].length > 0 && key !== 'id') {
-        return (
-          <ListItem key={key}>
-            <ListItemIcon>{successMsg}</ListItemIcon>
-            <ListItemText primary={key} />
+            <ListItemText primary={keysToTitle[key]} />
           </ListItem>
         );
       }
       if (key === 'id') {
         return '';
       }
+      if (draft[key] || draft[key].length > 0) {
+        return (
+          <ListItem key={key}>
+            <ListItemIcon>{successMsg}</ListItemIcon>
+            <ListItemText primary={keysToTitle[key]} />
+          </ListItem>
+        );
+      }
       return (
         <ListItem key={key}>
           <ListItemIcon>{errorMsg}</ListItemIcon>
-          <ListItemText primary={key} />
+          <ListItemText primary={keysToTitle[key]} />
         </ListItem>
       );
     }

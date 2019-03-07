@@ -15,7 +15,7 @@ import Loader from '../../loader/Loader';
 // import FileUpload from './FileUpload';
 import priorities from './priorities';
 import ProposalSchema from './ProposalSchema';
-import { submitDraft, fetchAllDrafts } from '../../../actions/index';
+import { submitDraft, fetchAllDrafts, submitApplication } from '../../../actions/index';
 
 const styles = theme => ({
   root: {
@@ -81,17 +81,7 @@ class ProposalApplication extends React.Component {
 
   render() {
     const { classes, match, allDrafts } = this.props;
-    console.log(match);
-    // const { drafts } = allDrafts;
     const { countries } = this.state;
-    // const decideVals = drafts.map(draft => {
-    //   if (Object.prototype.hasOwnProperty.call(draft, 'id')) {
-    //     if (draft.id === parseInt(match.params.id, 10)) {
-    //       return draft.draft.formData;
-    //     }
-    //   }
-    //   return initalVals;
-    // });
     const renderCountries = countries.map(country => (
       <MenuItem key={country.name} value={country.name}>
         {country.name}
@@ -134,12 +124,8 @@ class ProposalApplication extends React.Component {
           }}
           validationSchema={ProposalSchema}
           onSubmit={(values, { setSubmitting }) => {
-            console.log(values);
-            const clone = values;
-            delete clone.files;
-            clone.id = match.params.id;
-            console.log(clone);
-
+            const submitObj = { id: this.props.match.params.id, data: { ...values } };
+            this.props.submitApplication(submitObj);
             setSubmitting(false);
           }}
         >
@@ -477,6 +463,6 @@ const mapStateToProps = ({ AllDraftsReducer }) => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { submitDraft, fetchAllDrafts }
+    { submitDraft, fetchAllDrafts, submitApplication }
   )(withStyles(styles)(ProposalApplication))
 );

@@ -40,7 +40,27 @@ class NestedProposals extends React.Component {
         </ListItem>
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <Can I="view" a="Researcher">
+            <div>
+              <Can I="add" a="Proposal">
+                {() => (
+                  <ListItemLink
+                    route="admin/proposals"
+                    text="Add Proposals"
+                    className={classes.nested}
+                  />
+                )}
+              </Can>
+              <Can I="review" a="Proposal">
+                {() => (
+                  <ListItemLink
+                    route="admin/proposals/respond"
+                    text="Respond To Applications"
+                    className={classes.nested}
+                  />
+                )}
+              </Can>
+            </div>
+            <Can I="view" a="Proposal">
               {() => (
                 <div>
                   <ListItemLink

@@ -11,7 +11,6 @@ import formatDate from '../../util/formatDate';
 
 const MyLink = props => <Link to={`/proposals/${props.id}`} {...props} />;
 
-// TODO: grant application information NRP = DROPDOWN BRIEF 3
 const Cols = [
   { title: 'Title', field: 'title' },
   { title: 'Short Text', field: 'short_text' },
@@ -35,23 +34,11 @@ const Cols = [
     title: 'Deadline Time',
     field: 'deadline_time',
     render: rowData => <div>{formatDate(rowData.deadline_time)}</div>
-    // cellStyle: data => {
-    //   const compare = new Date(formatDate(data));
-    //   const now = new Date();
-    //   if (compare.getTime() >= now.getTime()) {
-    //     return {
-    //       color: red[500]
-    //     };
-    //   }
-    //   return {
-    //     color: green[500]
-    //   };
-    // }
   },
   {
-    title: 'Award Amount (€)',
+    title: 'Award Amount',
     cellStyle: { fontWeight: 'bold' },
-    render: rowData => `€ ${rowData.award_amount}`
+    render: rowData => `€ ${rowData.award_amount.toLocaleString('en')}`
   },
   {
     title: 'See More Information',
