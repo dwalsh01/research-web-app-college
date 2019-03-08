@@ -13,15 +13,15 @@ const ProposalSchema = Yup.object().shape({
       email: Yup.string().email()
     })
   ),
-  title: Yup.string(),
-  duration: Yup.number(),
-  nprArea: Yup.string(),
-  proposal_legal_remit: Yup.string(),
-  ethicalAnimals: Yup.string(),
-  ethicalMaterials: Yup.string(),
-  country: Yup.string(),
-  scientificAbstract: Yup.string(),
-  layAbstract: Yup.string()
+  title: Yup.string().required('Required!'),
+  duration: Yup.number().required('Required!'),
+  nprArea: Yup.string().required('Required!'),
+  proposal_legal_remit: Yup.string().required('Required!'),
+  ethicalAnimals: Yup.string().required('Required!'),
+  ethicalMaterials: Yup.string().required('Required!'),
+  country: Yup.string().required('Required!'),
+  scientificAbstract: Yup.string().required('Required!'),
+  layAbstract: Yup.string().required('Required!')
 });
 
 export default ProposalSchema;

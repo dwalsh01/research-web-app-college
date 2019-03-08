@@ -116,7 +116,6 @@ class UpdateDraft extends React.Component {
           validationSchema={ProposalSchema}
           onSubmit={(values, { setSubmitting }) => {
             const submitObj = { id: this.props.match.params.id, data: { ...values } };
-            console.log(values);
             this.props.submitApplication(submitObj);
             setSubmitting(false);
           }}
