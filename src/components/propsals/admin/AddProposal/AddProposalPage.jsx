@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 import AddProposalForm from './AddProposalForm';
 
 const styles = theme => ({
@@ -11,46 +11,28 @@ const styles = theme => ({
     margin: theme.spacing.unit
   },
   paper: {
+    maxWidth: 850,
     padding: theme.spacing.unit * 2,
     textAlign: 'center',
     color: theme.palette.text.secondary
   },
-  paperInside: {
-    padding: theme.spacing.unit * 2,
-    textAlign: 'left',
-    color: theme.palette.text.secondary
+  margin: {
+    margin: theme.spacing.unit
   },
   container: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    textAlign: 'center',
+    justifyContent: 'center'
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit
-  },
-  textFieldName: {
-    marginLeft: theme.spacing.unit,
-    width: '70%'
-  },
-  textFieldOther: {
-    marginLeft: theme.spacing.unit,
-    width: '27.5%'
-  },
-  formControl: {
-    margin: theme.spacing.unit
-  },
-  inlineFlex: {
-    display: 'inline-flex'
+    marginBottom: '10px'
   }
 });
 
 function AppProposalPage(props) {
-  const { classes } = props;
   return (
-    <div className={classes.root}>
-      <Typography variant="h2" style={{ padding: 20 }}>
-        Proposal Application
-      </Typography>
+    <div>
       <AddProposalForm {...props} />
     </div>
   );

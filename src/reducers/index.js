@@ -10,6 +10,7 @@ import PostEducationReducer from './PostEducationReducer';
 import SpecificDraftReducer from './SpecificDraftReducer';
 import DeleteDraftReducer from './DeleteDraftReducer';
 import PostApplicationReducer from './PostApplicationReducer';
+import AreasReducer from './AreasReducer';
 
 export default combineReducers({
   currentUserReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
   PostEducationReducer,
   SpecificDraftReducer,
   DeleteDraftReducer,
-  PostApplicationReducer
+  PostApplicationReducer,
+  AreasReducer
 });

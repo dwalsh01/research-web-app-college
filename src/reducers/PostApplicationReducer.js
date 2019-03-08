@@ -22,13 +22,13 @@ export default function PostApplicationReducer(state = initialState, action) {
       return {
         posting: false,
         success: true,
-        msg: action.payload
+        msg: action.payload.message
       };
     case SUBMIT_APPLICATION_ERROR:
       return {
         posting: false,
         success: false,
-        msg: action.payload
+        msg: action.payload.message
       };
     default:
       return state;

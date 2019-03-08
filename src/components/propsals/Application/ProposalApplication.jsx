@@ -13,9 +13,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Loader from '../../loader/Loader';
 // import FileUpload from './FileUpload';
-import priorities from './priorities';
 import ProposalSchema from './ProposalSchema';
-import { submitDraft, fetchAllDrafts, submitApplication } from '../../../actions/index';
+import { submitDraft, fetchAllDrafts, submitApplication, fetchAreas } from '../../../actions/index';
 
 const styles = theme => ({
   root: {
@@ -77,26 +76,30 @@ class ProposalApplication extends React.Component {
         })
       );
     this.props.fetchAllDrafts();
+    this.props.fetchAreas();
   }
 
   render() {
-    const { classes, match, allDrafts } = this.props;
+    const { classes, match, allDrafts, AreasReducer } = this.props;
+    const { areas } = AreasReducer;
     const { countries } = this.state;
+    const renderAreas = areas.map(area => (
+      <MenuItem key={area.nrp_id} value={area.nrp_id}>
+        {area.nrp_title}
+      </MenuItem>
+    ));
     const renderCountries = countries.map(country => (
       <MenuItem key={country.name} value={country.name}>
         {country.name}
       </MenuItem>
     ));
-    if (countries.length === 0 || allDrafts.fetching) {
+    if (countries.length === 0 || allDrafts.fetching || AreasReducer.fetching) {
       return <Loader />;
     }
     return (
       <div className={classes.root}>
         <Typography variant="h2" style={{ padding: 20 }}>
           Proposal Application
-        </Typography>
-        <Typography variant="subheading" style={{ paddingBottom: 5 }}>
-          View proposal again button here
         </Typography>
         <Formik
           initialValues={{
@@ -116,7 +119,7 @@ class ProposalApplication extends React.Component {
               {
                 name: '',
                 email: '',
-                org: ''
+                organization: ''
               }
             ],
             scientificAbstract: '',
@@ -125,6 +128,7 @@ class ProposalApplication extends React.Component {
           validationSchema={ProposalSchema}
           onSubmit={(values, { setSubmitting }) => {
             const submitObj = { id: this.props.match.params.id, data: { ...values } };
+            console.log(values);
             this.props.submitApplication(submitObj);
             setSubmitting(false);
           }}
@@ -273,11 +277,7 @@ class ProposalApplication extends React.Component {
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
-                        {priorities.map(item => (
-                          <MenuItem key={item} value={item}>
-                            {item}
-                          </MenuItem>
-                        ))}
+                        {renderAreas}
                       </Select>
                     </FormControl>
 
@@ -369,9 +369,9 @@ class ProposalApplication extends React.Component {
                                 className={classes.textField}
                               />
                               <TextField
-                                name={`collaborators[${index}].org`}
+                                name={`collaborators[${index}].organization`}
                                 label="Organisation"
-                                value={values.collaborators[index].org}
+                                value={values.collaborators[index].organization}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 margin="normal"
@@ -394,7 +394,9 @@ class ProposalApplication extends React.Component {
                               variant="contained"
                               className={classes.button}
                               style={{ display: 'inline', minWidth: '500' }}
-                              onClick={() => arrayHelpers.push({ name: '', email: '', org: '' })}
+                              onClick={() =>
+                                arrayHelpers.push({ name: '', email: '', organization: '' })
+                              }
                             >
                               Add New Collaborator
                             </Button>
@@ -456,13 +458,14 @@ class ProposalApplication extends React.Component {
     );
   }
 }
-const mapStateToProps = ({ AllDraftsReducer }) => ({
-  allDrafts: AllDraftsReducer
+const mapStateToProps = ({ AllDraftsReducer, AreasReducer }) => ({
+  allDrafts: AllDraftsReducer,
+  AreasReducer
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { submitDraft, fetchAllDrafts, submitApplication }
+    { submitDraft, fetchAllDrafts, submitApplication, fetchAreas }
   )(withStyles(styles)(ProposalApplication))
 );

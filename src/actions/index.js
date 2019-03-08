@@ -36,30 +36,43 @@ import {
   DELETE_DRAFT_RESET,
   SUBMIT_APPLICATION_START,
   SUBMIT_APPLICATION_ERROR,
-  SUBMIT_APPLICATION_SUCCESS
+  SUBMIT_APPLICATION_SUCCESS,
+  FETCH_AREAS_START,
+  FETCH_AREAS_SUCCESS,
+  FETCH_AREAS_ERROR
 } from './actionType';
 
 const headers = {
   'Content-Type': 'application/json'
 };
 
-// const fileHeaders = {
-//   'Content-Type': 'multipart/form-data'
-// };
+const multi = {
+  'Content-Type': 'multipart/form-data'
+};
 
-// TODO: IMPLEMENT THIS
-// export function submitDraftWithImage(formInfo, image = []) {
-//   const formData = new FormData();
-//   image.forEach(img => formData.append('image', img.file));
-//   formData.append('data', formInfo);
-//   axios
-//     .post('/apply/', formData, { fileHeaders })
-//     .then(response => {
-//       console.log(response.data);
-//       return response.data;
-//     })
-//     .catch(err => console.log(err.message));
-// }
+export function fetchAreas() {
+  return dispatch => {
+    dispatch(fetchAreasStart());
+    return axios
+      .get('/api/nrp')
+      .then(response => {
+        dispatch(fetchAreasSuccess(response.data.nrp));
+      })
+      .catch(err => dispatch(fetchAreasError(err.message)));
+  };
+}
+export const fetchAreasStart = () => ({
+  type: FETCH_AREAS_START
+});
+export const fetchAreasSuccess = areas => ({
+  type: FETCH_AREAS_SUCCESS,
+  payload: areas
+});
+export const fetchAreasError = msg => ({
+  type: FETCH_AREAS_ERROR,
+  payload: msg
+});
+
 export function submitApplication(application) {
   const shape = {
     proposal_id: application.id,
@@ -75,19 +88,18 @@ export function submitApplication(application) {
     lay_abstract: application.data.layAbstract,
     signed: false,
     list_of_co_applicants: application.data.coApplicants,
-    list_of_collaborators: application.data.collaborators
+    list_of_collaborators: application.data.collaborators,
+    files: []
   };
   console.log(shape);
   return dispatch => {
     dispatch(submitApplicationStart());
     axios
-      .post(`/calls/apply/${application.id}`, shape, { headers })
+      .post(`/calls/apply/${application.id}`, shape, { multi })
       .then(response => {
-        console.log('response post data: ', response);
         dispatch(submitApplicationSuccess(response.data));
       })
       .catch(err => {
-        console.log(err.message);
         dispatch(submitApplicationError(err.message));
       });
   };

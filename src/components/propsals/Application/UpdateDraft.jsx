@@ -13,13 +13,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Loader from '../../loader/Loader';
 // import FileUpload from './FileUpload';
-import priorities from './priorities';
 import ProposalSchema from './ProposalSchema';
 import {
+  submitApplication,
   submitDraft,
   getFullProposal,
   fetchSpecificDraft,
-  resetDraftPost
+  resetDraftPost,
+  fetchAreas
 } from '../../../actions/index';
 
 const styles = theme => ({
@@ -84,18 +85,24 @@ class UpdateDraft extends React.Component {
       );
     this.props.getFullProposal(match.params.id);
     this.props.fetchSpecificDraft(match.params.id);
+    this.props.fetchAreas();
     this.props.resetDraftPost();
   }
 
   render() {
-    const { classes, match, proposal, draft } = this.props;
+    const { classes, match, proposal, draft, areas } = this.props;
     const { countries } = this.state;
+    const renderAreas = areas.areas.map(area => (
+      <MenuItem key={area.nrp_id} value={area.nrp_id}>
+        {area.nrp_title}
+      </MenuItem>
+    ));
     const renderCountries = countries.map(country => (
       <MenuItem key={country.name} value={country.name}>
         {country.name}
       </MenuItem>
     ));
-    if (countries.length === 0 || proposal.isFetching || draft.fetching) {
+    if (countries.length === 0 || proposal.isFetching || draft.fetching || areas.fetching) {
       return <Loader />;
     }
     return (
@@ -103,17 +110,14 @@ class UpdateDraft extends React.Component {
         <Typography variant="h2" style={{ padding: 20 }}>
           Proposal Application
         </Typography>
-        {/* <Typography variant="subheading" style={{ paddingBottom: 5 }}>
-          View proposal again button here
-        </Typography> */}
+
         <Formik
           initialValues={draft.formData}
           validationSchema={ProposalSchema}
           onSubmit={(values, { setSubmitting }) => {
-            const clone = values;
-            delete clone.files;
-            clone.id = match.params.id;
-
+            const submitObj = { id: this.props.match.params.id, data: { ...values } };
+            console.log(values);
+            this.props.submitApplication(submitObj);
             setSubmitting(false);
           }}
         >
@@ -261,11 +265,7 @@ class UpdateDraft extends React.Component {
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
-                        {priorities.map(item => (
-                          <MenuItem key={item} value={item}>
-                            {item}
-                          </MenuItem>
-                        ))}
+                        {renderAreas}
                       </Select>
                     </FormControl>
 
@@ -450,14 +450,22 @@ class UpdateDraft extends React.Component {
     );
   }
 }
-const mapStateToProps = ({ proposalReducer, SpecificDraftReducer }) => ({
+const mapStateToProps = ({ proposalReducer, SpecificDraftReducer, AreasReducer }) => ({
   proposal: proposalReducer,
-  draft: SpecificDraftReducer
+  draft: SpecificDraftReducer,
+  areas: AreasReducer
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { submitDraft, getFullProposal, fetchSpecificDraft, resetDraftPost }
+    {
+      submitDraft,
+      getFullProposal,
+      fetchSpecificDraft,
+      resetDraftPost,
+      fetchAreas,
+      submitApplication
+    }
   )(withStyles(styles)(UpdateDraft))
 );
