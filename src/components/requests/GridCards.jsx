@@ -28,9 +28,7 @@ const GridCards = props => {
           title="Accepted Requests"
           titleIcon={ICONS.ACCEPTED}
           text="View of accepted requests"
-        >
-          <RequestsTable />
-        </RequestCard>
+        />
       </Grid>
       <Grid item xs={12} sm={12} lg={6}>
         <RequestCard

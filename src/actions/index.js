@@ -39,7 +39,10 @@ import {
   SUBMIT_APPLICATION_SUCCESS,
   FETCH_AREAS_START,
   FETCH_AREAS_SUCCESS,
-  FETCH_AREAS_ERROR
+  FETCH_AREAS_ERROR,
+  ADD_APPLICATION_START,
+  ADD_APPLICATION_SUCCESS,
+  ADD_APPLICATION_ERROR
 } from './actionType';
 
 const headers = {
@@ -49,6 +52,38 @@ const headers = {
 const multi = {
   'Content-Type': 'multipart/form-data'
 };
+
+export function addApplication(form) {
+  // const data = new FormData();
+  const { files, ...newForm } = form;
+  // data.append('image', files[0].file);
+  // data.append('data', newForm);
+  // console.log(data);
+  return dispatch => {
+    dispatch(addAppplicationStart());
+    axios
+      .post('/calls/add', newForm, { multi })
+      .then(response => {
+        dispatch(addAppplicationSuccess(response.data));
+      })
+      .catch(err => {
+        dispatch(addAppplicationError(err.message));
+      });
+    // axios.post('/calls/add', formData, {multi})
+  };
+}
+
+export const addAppplicationStart = () => ({
+  type: ADD_APPLICATION_START
+});
+export const addAppplicationSuccess = msg => ({
+  type: ADD_APPLICATION_SUCCESS,
+  payload: msg
+});
+export const addAppplicationError = msg => ({
+  type: ADD_APPLICATION_ERROR,
+  payload: msg
+});
 
 export function fetchAreas() {
   return dispatch => {
@@ -91,7 +126,6 @@ export function submitApplication(application) {
     list_of_collaborators: application.data.collaborators,
     files: []
   };
-  console.log(shape);
   return dispatch => {
     dispatch(submitApplicationStart());
     axios

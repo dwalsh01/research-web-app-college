@@ -6,8 +6,11 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import * as Yup from 'yup';
+import { connect } from 'react-redux';
 import formatDate from '../../../../util/formatDate';
 import pageTitle from '../../../../util/pageTitle';
+import FileUpload from '../../Application/FileUpload';
+import { addApplication } from '../../../../actions/index';
 
 const AppProposalSchema = Yup.object().shape({
   deadline_text: Yup.string().required('Required!'),
@@ -55,6 +58,7 @@ function AddProposalForm(props) {
         }}
         validationSchema={AppProposalSchema}
         onSubmit={(values, { setSubmitting }) => {
+          props.addApplication(values);
           console.log(values);
           setSubmitting(false);
         }}
@@ -67,10 +71,19 @@ function AddProposalForm(props) {
           isSubmitting,
           touched,
           handleBlur,
-          handleReset
+          handleReset,
+          setFieldValue
         }) => (
           <Form className={classes.container}>
             <Paper elevation={24} className={classes.paper}>
+              {/* <FileUpload
+                id="files"
+                name="files"
+                fileList={values.files}
+                onChange={uploadedFiles => {
+                  setFieldValue('files', uploadedFiles);
+                }}
+              /> */}
               <TextField
                 helperText={touched.title ? errors.title : ''}
                 error={touched.title && Boolean(errors.title)}
@@ -209,6 +222,7 @@ function AddProposalForm(props) {
                 className={classes.textField}
                 fullWidth
               />
+
               <FormControl fullWidth>
                 <InputLabel htmlFor="award_amount">Amount</InputLabel>
                 <Input
@@ -268,6 +282,7 @@ function AddProposalForm(props) {
                 }}
                 style={{ width: '50%', float: 'right', marginTop: 15, display: 'inline-flex' }}
               />
+
               <Button
                 className={classes.button}
                 variant="contained"
@@ -294,4 +309,7 @@ function AddProposalForm(props) {
   );
 }
 
-export default withRouter(AddProposalForm);
+export default connect(
+  null,
+  { addApplication }
+)(withRouter(AddProposalForm));
