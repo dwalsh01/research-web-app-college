@@ -64,7 +64,7 @@ export function addApplication(form) {
     axios
       .post('/calls/add', newForm, { multi })
       .then(response => {
-        dispatch(addAppplicationSuccess(response.data));
+        dispatch(addAppplicationSuccess(response.data.message));
       })
       .catch(err => {
         dispatch(addAppplicationError(err.message));

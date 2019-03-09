@@ -1,6 +1,8 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
+import { connect } from 'react-redux';
 import AddProposalForm from './AddProposalForm';
+import StatusMessage from '../../StatusMessage';
 
 const styles = theme => ({
   root: {
@@ -31,11 +33,23 @@ const styles = theme => ({
 });
 
 function AppProposalPage(props) {
+  const { createStatus } = props;
+  console.log(createStatus);
   return (
     <div>
       <AddProposalForm {...props} />
+      {createStatus.success && createStatus.msg.length > 0 && (
+        <StatusMessage status="success" message={createStatus.msg} />
+      )}
+      {!createStatus.success && createStatus.msg.length > 0 && (
+        <StatusMessage message={createStatus.msg} />
+      )}
     </div>
   );
 }
 
-export default withStyles(styles)(AppProposalPage);
+const mapStateToProps = ({ createApplicationReducer }) => ({
+  createStatus: createApplicationReducer
+});
+
+export default connect(mapStateToProps)(withStyles(styles)(AppProposalPage));

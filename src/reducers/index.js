@@ -11,6 +11,7 @@ import SpecificDraftReducer from './SpecificDraftReducer';
 import DeleteDraftReducer from './DeleteDraftReducer';
 import PostApplicationReducer from './PostApplicationReducer';
 import AreasReducer from './AreasReducer';
+import createApplicationReducer from './createApplicationReducer';
 
 export default combineReducers({
   currentUserReducer,
@@ -24,5 +25,6 @@ export default combineReducers({
   SpecificDraftReducer,
   DeleteDraftReducer,
   PostApplicationReducer,
-  AreasReducer
+  AreasReducer,
+  createApplicationReducer
 });
