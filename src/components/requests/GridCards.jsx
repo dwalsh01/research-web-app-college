@@ -1,13 +1,12 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import RequestCard, { ICONS } from './RequestCard';
-import RequestsTable from './RequestsTable';
 import pageTitle from '../../util/pageTitle';
+import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    textAlign: 'center'
   },
   paper: {
     height: 140
@@ -22,36 +21,13 @@ const GridCards = props => {
   const { classes } = props;
 
   return (
-    <Grid container className={classes.root} spacing={16}>
-      <Grid item xs={12} sm={12} lg={6}>
-        <RequestCard
-          title="Accepted Requests"
-          titleIcon={ICONS.ACCEPTED}
-          text="View of accepted requests"
-        />
-      </Grid>
-      <Grid item xs={12} sm={12} lg={6}>
-        <RequestCard
-          title="Pending Requests"
-          titleIcon={ICONS.PENDING}
-          text="View of pending requests"
-        >
-          <RequestsTable />
-        </RequestCard>
-      </Grid>
-      <Grid item xs={12} sm={12} lg={6}>
-        <RequestCard
-          title="Rejected Requests"
-          titleIcon={ICONS.REJECTED}
-          text="View of rejected requests"
-        >
-          <RequestsTable />
-        </RequestCard>
-      </Grid>
-      <Grid item xs={12} sm={12} lg={6}>
-        <RequestCard title="Submit Requests" titleIcon={ICONS.SUBMIT} text="Submit Request" />
-      </Grid>
-    </Grid>
+    <div className={classes.root}> 
+      <Typography variant="h2">Welcome to the SFI Research Application!</Typography>
+      <Typography variant="h6" style={{margin: 25, padding: 50}}>
+        To get started please select the menu icon in the top left of the screen
+      </Typography>
+
+    </div>
   );
 };
 

@@ -44,7 +44,7 @@ class NestedProposals extends React.Component {
               <Can I="add" a="Proposal">
                 {() => (
                   <ListItemLink
-                    route="admin/proposals"
+                    route="admin/proposals/add"
                     text="Add Proposals"
                     className={classes.nested}
                   />
@@ -53,25 +53,34 @@ class NestedProposals extends React.Component {
               <Can I="review" a="Proposal">
                 {() => (
                   <ListItemLink
-                    route="admin/proposals/respond"
+                    route="proposals/respond"
                     text="Respond To Applications"
                     className={classes.nested}
                   />
                 )}
               </Can>
             </div>
-            <Can I="view" a="Proposal">
-              {() => (
-                <div>
+             <div>
+              <Can I="view" a="PendingReviews">
+                {() => <ListItemLink route="admin/PendingReviews" text="Pending Review" className={classes.nested} />}
+              </Can>
+              </div>
+            <div>
+              <Can I="view" a="Proposal">
+                {() => (
                   <ListItemLink
                     route="proposals/all"
                     text="View Proposals"
                     className={classes.nested}
                   />
+                )}
+              </Can>
+              <Can I="view" a="Draft">
+                {() => (
                   <ListItemLink route="proposals/drafts" text="Drafts" className={classes.nested} />
-                </div>
-              )}
-            </Can>
+                )}
+              </Can>
+            </div>
           </List>
         </Collapse>
       </div>

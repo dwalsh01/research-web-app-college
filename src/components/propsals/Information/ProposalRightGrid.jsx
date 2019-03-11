@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { Divider } from '@material-ui/core';
 import ButtonLink from '../../../util/links/ButtonLink';
+import Can from '../../../config/Can';
 
 export default function ProposalRightGrid({ proposal, ...props }) {
   return (
@@ -45,9 +46,13 @@ export default function ProposalRightGrid({ proposal, ...props }) {
           Interested in applying to this proposal? Please click the button below!
         </Typography>
         {proposal.id && (
-          <div className={props.classes.padded}>
-            <ButtonLink to={proposal.id} text="Apply Now" />
-          </div>
+          <Can I="apply" a="Proposal">
+            {() => (
+              <div className={props.classes.padded}>
+                <ButtonLink to={proposal.id} text="Apply Now" />
+              </div>
+            )}
+          </Can>
         )}
       </Paper>
     </Grid>

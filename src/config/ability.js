@@ -16,7 +16,6 @@ let currentAuth;
 store.subscribe(() => {
   const prevAuth = currentAuth;
   currentAuth = store.getState().currentUserReducer;
-
   if (prevAuth !== currentAuth) {
     ability.update(defineRulesFor(currentAuth));
   }
@@ -27,13 +26,16 @@ function defineRulesFor(auth) {
   if (auth.role === 'researcher') {
     can('view', 'Proposal', { userId: auth.user.id });
     can('view', 'Draft', { userId: auth.user.id });
+    can('apply', 'Proposal', { userId: auth.user.id });
     can('view', 'Profile', { userId: auth.user.id });
     can('view', 'Teams', { userId: auth.user.id });
   }
   if (auth.role === 'admin') {
     can('add', 'Proposal', { userId: auth.user.id });
+    can('view', 'Proposal', { userId: auth.user.id });
     can('accept', 'Application', { userId: auth.user.id });
     can('reject', 'Application', { userId: auth.user.id });
+    can('view', 'PendingReviews', { userId: auth.user.id } )
   }
   if (auth.role === 'reviewer') {
     can('review', 'Proposal', { userId: auth.user.id });

@@ -34,7 +34,6 @@ const styles = theme => ({
 
 function AppProposalPage(props) {
   const { createStatus } = props;
-  console.log(createStatus);
   return (
     <div>
       <AddProposalForm {...props} />

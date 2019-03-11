@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import axios from 'axios';
 import {
   USER_DATA,
@@ -42,7 +43,20 @@ import {
   FETCH_AREAS_ERROR,
   ADD_APPLICATION_START,
   ADD_APPLICATION_SUCCESS,
-  ADD_APPLICATION_ERROR
+  ADD_APPLICATION_ERROR,
+  FETCH_PENDING_SUCCESS,
+  FETCH_PENDING_START,
+  FETCH_PENDING_ERROR,
+  FETCH_APPLICATION_START,
+  FETCH_APPLICATION_SUCCESS,
+  FETCH_APPLICATION_ERROR,
+  APPLICATION_SELECTED,
+  SUBMIT_REVIEW_START,
+  SUBMIT_REVIEW_SUCCESS,
+  SUBMIT_REVIEW_ERROR,
+  FETCH_REVIEWS_START,
+  FETCH_REVIEWS_SUCCESS,
+  FETCH_REVIEWS_ERROR
 } from './actionType';
 
 const headers = {
@@ -52,6 +66,99 @@ const headers = {
 const multi = {
   'Content-Type': 'multipart/form-data'
 };
+
+export function fetchReviews() {
+  return dispatch => {
+    dispatch(fetchReviewsStart());
+    axios
+      .get('/reviews/all')
+      .then(({ data }) => {
+        data.forEach(el => {
+          dispatch(fetchApplication(el.app_id));
+        });
+        dispatch(fetchReviewsSuccess(data));
+      })
+      .catch(err => fetchReviewsError(err.message));
+  };
+}
+
+export const fetchReviewsStart = () => ({
+  type: FETCH_REVIEWS_START
+});
+export const fetchReviewsSuccess = data => ({
+  type: FETCH_REVIEWS_SUCCESS,
+  payload: data
+});
+export const fetchReviewsError = msg => ({
+  type: FETCH_REVIEWS_ERROR,
+  payload: msg
+});
+export function submitReview(data) {
+  const { app_id, ...rest } = data;
+  return dispatch => {
+    dispatch(submitReviewStart());
+    axios
+      .post(`/reviews/add/${app_id}`, rest, headers)
+      .then(response => {
+        console.log(response.data);
+        dispatch(submitReviewSuccess(response.data.message));
+      })
+      .catch(err => dispatch(submitReviewError(err.message)));
+  };
+}
+
+export const submitReviewStart = () => ({ type: SUBMIT_REVIEW_START });
+export const submitReviewSuccess = msg => ({ type: SUBMIT_REVIEW_SUCCESS, payload: msg });
+export const submitReviewError = msg => ({ type: SUBMIT_REVIEW_ERROR, payload: msg });
+
+export const selectApplication = application => dispatch =>
+  dispatch({ type: APPLICATION_SELECTED, payload: application });
+
+export function fetchApplication(id) {
+  return dispatch => {
+    dispatch(fetchApplicationStart());
+    axios
+      .get(`/calls/apply/get/${id}`)
+      .then(response => response.data)
+      .then(data => {
+        dispatch(fetchApplicationSuccess(data));
+      })
+      .catch(err => dispatch(fetchApplicationError(err.message)));
+  };
+}
+
+export const fetchApplicationStart = () => ({ type: FETCH_APPLICATION_START });
+export const fetchApplicationSuccess = data => ({ type: FETCH_APPLICATION_SUCCESS, payload: data });
+export const fetchApplicationError = msg => ({ type: FETCH_APPLICATION_ERROR, payload: msg });
+
+export function fetchPending() {
+  return dispatch => {
+    dispatch(pendingStart());
+    return axios
+      .get('/reviews/pending')
+      .then(response => response.data)
+      .then(data => {
+        data.reviews.forEach(el => {
+          dispatch(fetchApplication(el.app_id));
+        });
+        dispatch(pendingSuccess(data.reviews));
+      })
+      .catch(err => dispatch(pendingError(err.message)));
+  };
+}
+export const pendingStart = () => ({
+  type: FETCH_PENDING_START
+});
+
+export const pendingSuccess = data => ({
+  type: FETCH_PENDING_SUCCESS,
+  payload: data
+});
+
+export const pendingError = data => ({
+  type: FETCH_PENDING_ERROR,
+  payload: data
+});
 
 export function addApplication(form) {
   // const data = new FormData();
@@ -134,7 +241,7 @@ export function submitApplication(application) {
         dispatch(submitApplicationSuccess(response.data));
       })
       .catch(err => {
-        dispatch(submitApplicationError(err.message));
+        dispatch(submitApplicationError(err));
       });
   };
 }
@@ -297,7 +404,7 @@ export function postEducation(education) {
     dispatch(EducationPostBegin());
     axios
       .post('/profile/education', education, { headers })
-      .then(response => console.log(response.data))
+      .then(response => educationPostSuccess(response.data.message))
       .catch(err => console.log(err.message));
   };
 }
@@ -355,8 +462,6 @@ export function logout() {
 export const logoutBegin = () => ({
   type: LOGOUT_BEGIN
 });
-// TODO: Create proposal form for admin users
-// TODO: Look at how to hide routes depending on user status (admin, researcher, etc.)
 
 export function register(userInformation) {
   return dispatch => {

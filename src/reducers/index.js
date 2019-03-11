@@ -12,6 +12,11 @@ import DeleteDraftReducer from './DeleteDraftReducer';
 import PostApplicationReducer from './PostApplicationReducer';
 import AreasReducer from './AreasReducer';
 import createApplicationReducer from './createApplicationReducer';
+import PendingApplication from './PendingApplication';
+import FetchApplication from './FetchApplications';
+import SelectApplication from './SelectApplication';
+import SubmitReviewReducer from './SubmitReviewReducer';
+import FetchReviews from './FetchReviews';
 
 export default combineReducers({
   currentUserReducer,
@@ -26,5 +31,10 @@ export default combineReducers({
   DeleteDraftReducer,
   PostApplicationReducer,
   AreasReducer,
-  createApplicationReducer
+  createApplicationReducer,
+  PendingApplication,
+  FetchApplication,
+  SelectApplication,
+  SubmitReviewReducer,
+  FetchReviews
 });

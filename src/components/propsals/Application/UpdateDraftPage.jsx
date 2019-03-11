@@ -15,12 +15,12 @@ function UpdateDraftPage(props) {
       {draftStatus.error && draftStatus.errorMsg.length > 0 && (
         <StatusMessage message={draftStatus.errorMsg} />
       )}
-      {postStatus.success && postStatus.msg.length > 0 && (
+      {/* {postStatus.success && postStatus.msg.length > 0 && (
         <StatusMessage status="success" message={postStatus.msg} />
       )}
       {!postStatus.success && postStatus.msg.length > 0 && (
         <StatusMessage message={postStatus.msg} />
-      )}
+      )} */}
     </div>
   );
 }

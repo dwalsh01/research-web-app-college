@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import formatDate from '../../../../util/formatDate';
 import { postEducation } from '../../../../actions';
+import isEmpty from '../../../../util/isEmpty';
 
 const EducationSchema = Yup.object().shape({
   degree: Yup.string(),
@@ -30,12 +31,12 @@ const styles = theme => ({
 });
 
 const EducationForm = ({ education, ...props }) => {
-  console.log(education);
+ const vals =  {degree: '', field_of_study: '', institution: '', location: '', year_degree_award: new Date()}
   return (
     <div>
       <h1>Education Information</h1>
       <Formik
-        initialValues={education}
+        initialValues={isEmpty(education) ? vals : education}
         validationSchema={EducationSchema}
         onSubmit={(values, { setSubmitting }) => {
           props.postEducation(values);
@@ -102,7 +103,6 @@ const EducationForm = ({ education, ...props }) => {
               label="Year Degree Awarded"
               type="date"
               value={formatDate(new Date(values.year_degree_award))}
-              // defaultValue={formatDate(values.year_degree_award)}
               className={props.classes.textField}
               onChange={handleChange}
               InputLabelProps={{

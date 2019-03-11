@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import EducationForm from './EducationForm';
-import PostMsg from './PostMsg';
+import StatusMessage from '../../../propsals/StatusMessage';
 
 function EducationFormPage(props) {
   const { EducationReducer, PostEducationReducer } = props;
@@ -9,10 +9,10 @@ function EducationFormPage(props) {
     <div>
       <EducationForm education={EducationReducer.education} />
       {PostEducationReducer.success === true && (
-        <PostMsg state="success" message="sucessfully updated data!" />
+        <StatusMessage status="success" message="sucessfully updated data!" />
       )}
       {PostEducationReducer.error === true && (
-        <PostMsg state="error" message="error updating data, please try again!" />
+        <StatusMessage message="error updating data, please try again!" />
       )}
     </div>
   );

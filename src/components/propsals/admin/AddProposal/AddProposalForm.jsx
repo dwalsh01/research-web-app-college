@@ -9,7 +9,6 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import formatDate from '../../../../util/formatDate';
 import pageTitle from '../../../../util/pageTitle';
-import FileUpload from '../../Application/FileUpload';
 import { addApplication } from '../../../../actions/index';
 
 const AppProposalSchema = Yup.object().shape({
@@ -59,7 +58,6 @@ function AddProposalForm(props) {
         validationSchema={AppProposalSchema}
         onSubmit={(values, { setSubmitting }) => {
           props.addApplication(values);
-          console.log(values);
           setSubmitting(false);
         }}
       >
